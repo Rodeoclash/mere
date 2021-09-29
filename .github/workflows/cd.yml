@@ -1,0 +1,34 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GPR_URL: "docker.pkg.github.com"
+  GPR_USER: "rodeoclash"
+  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/volt/app:latest"
+  SHA: ${{ github.SHA }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - uses: webfactory/ssh-agent@cb8b21017acfd319f0f4eb320ae495f22c36d0a7
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Log in to GPR
+        run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull the app image from GPR
+        run: docker pull ${IMAGE_PATH_LATEST_APP}
+
+      - name: Run deploy playbook
+        run: |
+          make infra-deploy

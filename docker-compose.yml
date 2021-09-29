@@ -1,0 +1,57 @@
+version: "3.7"
+
+services:
+  postgres:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    logging: &logging
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    image: postgres:12
+
+  app: &app
+    build:
+      context: ./app
+      target: development
+      dockerfile: Dockerfile.dev
+    command: mix phx.server
+    depends_on:
+      - postgres
+    image: app
+    logging: *logging
+    ports:
+      - "4000:4000"
+    user: "1000"
+    volumes:
+      - ./app:/usr/src/app
+      - ./passwd:/etc/passwd
+      - /dev/shm:/dev/shm
+      - home:/home/server
+      - opt-hex:/opt/hex
+      - opt-mix:/opt/mix
+
+  pgadmin:
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@example.com
+      PGADMIN_DEFAULT_PASSWORD: 12345678
+    image: dpage/pgadmin4
+    logging: &no-logging
+      driver: none
+    ports:
+      - "5000:80"
+
+  mailhog:
+    image: mailhog/mailhog
+    logging: *no-logging
+    ports:
+      - "8026:8025"
+
+volumes:
+  home:
+  opt-hex:
+  opt-mix:

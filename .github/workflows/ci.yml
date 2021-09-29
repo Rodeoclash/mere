@@ -1,0 +1,65 @@
+name: CI
+
+on: [push]
+
+env:
+  GPR_URL: "docker.pkg.github.com"
+  GPR_USER: "rodeoclash"
+  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/volt/app:latest"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Log in to GPR
+        run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull the app image from GPR
+        run: docker pull ${IMAGE_PATH_LATEST_APP}
+
+      - name: Build the app Docker image
+        run: docker build --file app/Dockerfile --tag ${IMAGE_PATH_LATEST_APP} --cache-from ${IMAGE_PATH_LATEST_APP} --target=development ./app
+
+      - name: Publish the app image to GPR
+        run: docker push ${IMAGE_PATH_LATEST_APP}
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Log in to GPR
+        run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test
+        run: docker-compose -f docker-compose.ci.yml run app mix test --max-cases 1
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          retention-days: 1
+          path: ./screenshots/
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Log in to GPR
+        run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint all
+        run: npx prettier --check "**/*.{js,json,css,md,html,jsx,yml,yaml}"
+
+      - name: Lint elixir
+        run: docker-compose -f docker-compose.ci.yml run app mix format --check-formatted

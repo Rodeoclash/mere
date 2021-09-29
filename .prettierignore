@@ -1,0 +1,6 @@
+app/_build
+app/assets/js/services/phoenix-jsroutes.js
+app/cover
+app/deps
+app/priv/static
+node_modules

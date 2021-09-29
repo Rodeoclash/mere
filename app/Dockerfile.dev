@@ -1,0 +1,51 @@
+FROM elixir:1.12 as development
+
+EXPOSE 4000
+
+ENV APP_HOME=/usr/src/app \
+  CHROMEDRIVER_DIR=/chromedriver \
+  CHROMEDRIVER_VERSION=94.0.4606.41 \
+  HEX_HOME=/opt/hex \
+  HEX_HTTP_TIMEOUT=30 \
+  LANG=C.UTF-8 \
+  MIX_HOME=/opt/mix \
+  REFRESHED_AT=2020-12-01
+
+ENV PATH="${APP_HOME}/assets/node_modules/.bin:${CHROMEDRIVER_DIR}:${PATH}"
+
+WORKDIR $APP_HOME
+
+# chrome source
+RUN curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo "deb https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+
+# install
+RUN apt-get update && \
+    apt-get install -yq \
+    google-chrome-stable \
+    inotify-tools \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
+
+# install chromedriver
+RUN mkdir -p $CHROMEDRIVER_DIR && \
+  curl -LO http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip && \
+  unzip chromedriver_linux64.zip -d $CHROMEDRIVER_DIR && \
+  chown -R 1000:1000 $CHROMEDRIVER_DIR && \
+  rm chromedriver_linux64.zip
+
+# install supporting tools
+RUN mix local.hex --force
+RUN mix local.rebar --force
+
+# copy dependencies
+COPY ./config config
+COPY ./mix.exs ./mix.lock ./.formatter.exs ./
+
+RUN MIX_ENV=dev mix do deps.get, deps.compile
+RUN MIX_ENV=test mix do deps.get deps.compile
+
+# copy in the applications
+COPY ./ ./
+
+CMD mix phx.server

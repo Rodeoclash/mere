@@ -1,0 +1,30 @@
+{
+  "name": "mere",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "posttest": "npm run format",
+    "format-check": "prettier --check \"**/*.{js,json,css,md,html,jsx,yml,yaml}\"",
+    "format": "prettier --write \"**/*.{js,json,css,md,html,jsx,yml,yaml}\"",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rodeoclash/mere.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rodeoclash/mere/issues"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "homepage": "https://github.com/Rodeoclash/mere#readme"
+}
