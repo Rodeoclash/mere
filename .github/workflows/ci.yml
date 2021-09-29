@@ -55,7 +55,7 @@ jobs:
       - name: Log in to GPR
         run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Lint all
+      - name: Lint prettier
         run: npx prettier@2.4.1 --check "**/*.{js,json,css,md,html,jsx,yml,yaml}"
 
       - name: Lint elixir
