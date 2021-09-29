@@ -40,6 +40,7 @@ RUN mix local.rebar --force
 # copy dependencies
 COPY ./config config
 COPY ./mix.exs ./mix.lock ./.formatter.exs ./
+RUN echo '%{}' > ./config/dev.secret.exs
 
 RUN MIX_ENV=dev mix do deps.get, deps.compile
 RUN MIX_ENV=test mix do deps.get, deps.compile

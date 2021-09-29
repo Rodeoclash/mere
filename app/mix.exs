@@ -34,22 +34,25 @@ defmodule Mere.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:certifi, "~> 2.4"},
+      {:ecto_sql, "~> 3.6"},
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:floki, ">= 0.30.0", only: :test},
+      {:gettext, "~> 0.18"},
+      {:jason, "~> 1.2"},
       {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_dashboard, "~> 0.5"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.16.0"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:plug_cowboy, "~> 2.5"},
+      {:postgrex, ">= 0.0.0"},
+      {:pow_assent, git: "https://github.com/pow-auth/pow_assent.git", branch: :master},
+      {:ssl_verify_fun, "~> 1.1"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
     ]
   end
 

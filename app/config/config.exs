@@ -17,6 +17,10 @@ config :mere, MereWeb.Endpoint,
   pubsub_server: Mere.PubSub,
   live_view: [signing_salt: "cvUBcfFl"]
 
+config :mere, :pow,
+  user: Mere.Users.User,
+  repo: Mere.Repo
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

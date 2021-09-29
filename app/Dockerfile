@@ -26,7 +26,7 @@ COPY ./assets ./assets
 COPY ./lib ./lib
 COPY ./priv ./priv
 
-RUN mix phx.digest
+RUN mix assets.deploy
 
 # create a release
 RUN mix release production
@@ -37,7 +37,7 @@ RUN mix release production
 FROM debian:buster-slim as deploy
 
 ENV APP_HOME=/usr/src/app \
-    MIX_ENV=prod
+    MIX_ENV=prod \
     LANG=C.UTF-8
 
 EXPOSE 4000

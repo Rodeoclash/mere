@@ -20,6 +20,19 @@ if config_env() == :prod do
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
+  config :mere, :pow_assent,
+    providers: [
+      google: [
+        authorization_params: [
+          access_type: "offline",
+          scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/youtube.readonly",
+        ],
+        client_id: System.get_env("GOOGLE_CLIENT_ID") || raise "environment variable GOOGLE_CLIENT_ID is missing.",
+        client_secret: System.get_env("GOOGLE_CLIENT_SECRET") || raise "environment variable GOOGLE_CLIENT_SECRET is missing.",
+        strategy: Assent.Strategy.Google
+      ]
+    ]
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want

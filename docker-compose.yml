@@ -50,6 +50,11 @@ services:
     ports:
       - "8026:8025"
 
+  ngrok:
+    command: $NGROK_COMMAND
+    logging: *logging
+    image: wernight/ngrok:latest
+
 volumes:
   home:
   opt-hex:
