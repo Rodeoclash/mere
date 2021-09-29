@@ -52,7 +52,7 @@ defmodule Mere.MixProject do
       {:ssl_verify_fun, "~> 1.1"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"},
+      {:telemetry_poller, "~> 1.0"}
     ]
   end
 
