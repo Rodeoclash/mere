@@ -5,7 +5,7 @@ on: [push]
 env:
   GPR_URL: "docker.pkg.github.com"
   GPR_USER: "rodeoclash"
-  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/volt/app:latest"
+  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/mere/app:latest"
 
 jobs:
   build:
@@ -18,11 +18,11 @@ jobs:
       - name: Log in to GPR
         run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull the app image from GPR
-        run: docker pull ${IMAGE_PATH_LATEST_APP}
+      #- name: Pull the app image from GPR
+      #  run: docker pull ${IMAGE_PATH_LATEST_APP}
 
       - name: Build the app Docker image
-        run: docker build --file app/Dockerfile --tag ${IMAGE_PATH_LATEST_APP} --cache-from ${IMAGE_PATH_LATEST_APP} --target=development ./app
+        run: docker build --file app/Dockerfile.dev --tag ${IMAGE_PATH_LATEST_APP} --cache-from ${IMAGE_PATH_LATEST_APP} --target=development ./app
 
       - name: Publish the app image to GPR
         run: docker push ${IMAGE_PATH_LATEST_APP}

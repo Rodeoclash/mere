@@ -8,7 +8,7 @@ on:
 env:
   GPR_URL: "docker.pkg.github.com"
   GPR_USER: "rodeoclash"
-  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/volt/app:latest"
+  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/mere/app:latest"
   SHA: ${{ github.SHA }}
 
 jobs:
@@ -28,7 +28,3 @@ jobs:
 
       - name: Pull the app image from GPR
         run: docker pull ${IMAGE_PATH_LATEST_APP}
-
-      - name: Run deploy playbook
-        run: |
-          make infra-deploy
