@@ -27,8 +27,8 @@ if config_env() == :prod do
           access_type: "offline",
           scope: "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/youtube.readonly",
         ],
-        client_id: System.get_env("GOOGLE_CLIENT_ID") || raise "environment variable GOOGLE_CLIENT_ID is missing.",
-        client_secret: System.get_env("GOOGLE_CLIENT_SECRET") || raise "environment variable GOOGLE_CLIENT_SECRET is missing.",
+        client_id: System.get_env("GOOGLE_CLIENT_ID"),
+        client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
         strategy: Assent.Strategy.Google
       ]
     ]
