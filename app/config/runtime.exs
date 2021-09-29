@@ -25,6 +25,7 @@ if config_env() == :prod do
       google: [
         authorization_params: [
           access_type: "offline",
+          prompt: "consent",
           scope:
             "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/youtube.readonly"
         ],
