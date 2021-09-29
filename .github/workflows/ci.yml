@@ -22,7 +22,7 @@ jobs:
       #  run: docker pull ${IMAGE_PATH_LATEST_APP}
 
       - name: Build the app Docker image
-        run: docker build --file app/Dockerfile.dev --tag ${IMAGE_PATH_LATEST_APP} --cache-from ${IMAGE_PATH_LATEST_APP} --target=development ./app
+        run: docker build --file app/Dockerfile.dev --tag ${IMAGE_PATH_LATEST_APP} --cache-from ${IMAGE_PATH_LATEST_APP} ./app
 
       - name: Publish the app image to GPR
         run: docker push ${IMAGE_PATH_LATEST_APP}

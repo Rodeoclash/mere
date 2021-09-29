@@ -15,7 +15,6 @@ services:
   app: &app
     build:
       context: ./app
-      target: development
       dockerfile: Dockerfile.dev
     command: mix phx.server
     depends_on:
