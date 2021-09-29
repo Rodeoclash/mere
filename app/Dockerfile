@@ -7,7 +7,7 @@ FROM elixir:1.12 as development
 ENV APP_HOME=/usr/src/app \
   HEX_HTTP_TIMEOUT=30 \
   LANG=C.UTF-8 \
-  REFRESHED_AT=2020-12-01
+  MIX_ENV=prod
 
 WORKDIR $APP_HOME
 
@@ -19,23 +19,26 @@ RUN mix local.rebar --force
 COPY ./config config
 COPY ./mix.exs ./mix.lock ./.formatter.exs ./
 
-RUN MIX_ENV=prod mix do deps.get deps.compile
+RUN mix do deps.get deps.compile
 
 # copy in the applications
-COPY ./ ./
+COPY ./assets ./assets
+COPY ./lib ./lib
+COPY ./priv ./priv
 
 RUN mix phx.digest
 
 # create a release
-RUN MIX_ENV=prod mix release production
+RUN mix release production
 
 #
 # Deploy
 #
 FROM debian:buster-slim as deploy
 
-ENV APP_HOME /usr/src/app
-ENV LANG C.UTF-8
+ENV APP_HOME=/usr/src/app \
+    MIX_ENV=prod
+    LANG=C.UTF-8
 
 EXPOSE 4000
 
