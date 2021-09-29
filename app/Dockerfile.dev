@@ -42,8 +42,7 @@ RUN mix local.rebar --force
 COPY ./config config
 COPY ./mix.exs ./mix.lock ./.formatter.exs ./
 
-RUN MIX_ENV=dev mix do deps.get, deps.compile
-RUN MIX_ENV=test mix do deps.get deps.compile
+RUN mix do deps.get, deps.compile
 
 # copy in the applications
 COPY ./ ./

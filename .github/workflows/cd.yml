@@ -6,25 +6,13 @@ on:
       - main
 
 env:
-  GPR_URL: "docker.pkg.github.com"
-  GPR_USER: "rodeoclash"
-  IMAGE_PATH_LATEST_APP: "docker.pkg.github.com/rodeoclash/mere/app:latest"
-  SHA: ${{ github.SHA }}
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - uses: webfactory/ssh-agent@cb8b21017acfd319f0f4eb320ae495f22c36d0a7
+      - uses: actions/checkout@v2
+      - uses: superfly/flyctl-actions@1.1
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
-
-      - name: Log in to GPR
-        run: docker login ${GPR_URL} -u ${GPR_USER} -p ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull the app image from GPR
-        run: docker pull ${IMAGE_PATH_LATEST_APP}
+          args: "deploy ./app"

@@ -15,9 +15,6 @@ services:
   app: &app
     depends_on:
       - postgres
-    environment:
-      AWS_ACCESS_KEY_ID:
-      AWS_SECRET_ACCESS_KEY:
     image: ${IMAGE_PATH_LATEST_APP}
     logging: *logging
     volumes:
