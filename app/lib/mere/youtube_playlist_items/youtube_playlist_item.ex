@@ -1,12 +1,12 @@
-defmodule Mere.YouTubeChannels.YouTubeChannel do
+defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
   alias Mere.{
-    UserIdentities.UserIdentity
+    YouTubeChannels.YouTubeChannel
   }
 
   use Ecto.Schema
 
-  schema "youtube_channels" do
-    belongs_to :user_identity, UserIdentity
+  schema "youtube_playlist_items" do
+    belongs_to :youtube_channel, YouTubeChannel
 
     field :body, :map
     field :last_refreshed_at, :utc_datetime

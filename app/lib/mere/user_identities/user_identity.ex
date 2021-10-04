@@ -2,6 +2,7 @@ defmodule Mere.UserIdentities.UserIdentity do
   alias Mere.{
     YouTubeChannels
   }
+
   use Ecto.Schema
   use PowAssent.Ecto.UserIdentities.Schema, user: Mere.Users.User
 
@@ -18,10 +19,10 @@ defmodule Mere.UserIdentities.UserIdentity do
     timestamps()
   end
 
-  def changeset(user_identity_or_changeset, attrs) do
+  def changeset(record_or_changeset, attrs) do
     token_params = Map.get(attrs, "token", attrs)
 
-    user_identity_or_changeset
+    record_or_changeset
     |> pow_assent_changeset(attrs)
     |> set_expires
     |> Ecto.Changeset.cast(token_params, [
@@ -38,8 +39,8 @@ defmodule Mere.UserIdentities.UserIdentity do
     ])
   end
 
-  def changeset_refresh_access_token(user_identity_or_changeset, attrs) do
-    user_identity_or_changeset
+  def changeset_refresh_access_token(record_or_changeset, attrs) do
+    record_or_changeset
     |> Ecto.Changeset.cast(attrs, [
       :access_token,
       :access_token_expires_at
