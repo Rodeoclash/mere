@@ -21,9 +21,10 @@ defmodule MereWeb.SettingsLive.Index do
   end
 
   defp data do
-    #YouTubeChannels.list_youtube_channels()
+    # YouTubeChannels.list_youtube_channels()
     %{
       youtube_channel: %{}
-    } |> Jason.encode!
+    }
+    |> Jason.encode!()
   end
 end

@@ -20,12 +20,12 @@ defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
     |> Ecto.Changeset.cast(attrs, [
       :body,
       :last_refreshed_at,
-      :youtube_id,
+      :youtube_id
     ])
     |> Ecto.Changeset.validate_required([
       :body,
       :last_refreshed_at,
-      :youtube_id,
+      :youtube_id
     ])
   end
 end

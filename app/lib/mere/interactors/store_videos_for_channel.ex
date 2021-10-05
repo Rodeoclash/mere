@@ -7,9 +7,7 @@ defmodule Mere.Interactors.StoreVideosForChannel do
 
   def perform(youtube_channel) do
     with {:ok, response} <-
-           YouTubeChannels.YouTube.PlaylistItems.for_youtube_channel(
-             youtube_channel
-           ),
+           YouTubeChannels.YouTube.PlaylistItems.for_youtube_channel(youtube_channel),
          _ <- IO.inspect(response),
          {:ok, playlist_items} <-
            Enum.map(response.body["items"], fn playlist_item ->

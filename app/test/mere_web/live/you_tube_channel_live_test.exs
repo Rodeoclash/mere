@@ -46,7 +46,9 @@ defmodule MereWeb.YouTubeChannelLiveTest do
     test "updates you_tube_channel in listing", %{conn: conn, you_tube_channel: you_tube_channel} do
       {:ok, index_live, _html} = live(conn, Routes.you_tube_channel_index_path(conn, :index))
 
-      assert index_live |> element("#you_tube_channel-#{you_tube_channel.id} a", "Edit") |> render_click() =~
+      assert index_live
+             |> element("#you_tube_channel-#{you_tube_channel.id} a", "Edit")
+             |> render_click() =~
                "Edit You tube channel"
 
       assert_patch(index_live, Routes.you_tube_channel_index_path(conn, :edit, you_tube_channel))
@@ -67,7 +69,10 @@ defmodule MereWeb.YouTubeChannelLiveTest do
     test "deletes you_tube_channel in listing", %{conn: conn, you_tube_channel: you_tube_channel} do
       {:ok, index_live, _html} = live(conn, Routes.you_tube_channel_index_path(conn, :index))
 
-      assert index_live |> element("#you_tube_channel-#{you_tube_channel.id} a", "Delete") |> render_click()
+      assert index_live
+             |> element("#you_tube_channel-#{you_tube_channel.id} a", "Delete")
+             |> render_click()
+
       refute has_element?(index_live, "#you_tube_channel-#{you_tube_channel.id}")
     end
   end
@@ -76,13 +81,18 @@ defmodule MereWeb.YouTubeChannelLiveTest do
     setup [:create_you_tube_channel]
 
     test "displays you_tube_channel", %{conn: conn, you_tube_channel: you_tube_channel} do
-      {:ok, _show_live, html} = live(conn, Routes.you_tube_channel_show_path(conn, :show, you_tube_channel))
+      {:ok, _show_live, html} =
+        live(conn, Routes.you_tube_channel_show_path(conn, :show, you_tube_channel))
 
       assert html =~ "Show You tube channel"
     end
 
-    test "updates you_tube_channel within modal", %{conn: conn, you_tube_channel: you_tube_channel} do
-      {:ok, show_live, _html} = live(conn, Routes.you_tube_channel_show_path(conn, :show, you_tube_channel))
+    test "updates you_tube_channel within modal", %{
+      conn: conn,
+      you_tube_channel: you_tube_channel
+    } do
+      {:ok, show_live, _html} =
+        live(conn, Routes.you_tube_channel_show_path(conn, :show, you_tube_channel))
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit You tube channel"
