@@ -35,6 +35,8 @@ defmodule MereWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/settings", SettingsLive.Index, :index
   end
 
   scope "/" do
