@@ -42,6 +42,7 @@ defmodule Mere.MixProject do
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:oauth2, "~> 2.0"},
+      {:oban, "~> 2.9"},
       {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.0"},

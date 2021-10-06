@@ -1,7 +1,12 @@
 defmodule Mere.YouTubeChannels.YouTubeChannel do
+  alias __MODULE__
+
   alias Mere.{
-    UserIdentities.UserIdentity
+    UserIdentities.UserIdentity,
+    YouTubePlaylistItems.YouTubePlaylistItem
   }
+
+  import Ecto.Query
 
   use Ecto.Schema
 
@@ -11,6 +16,11 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
     field :body, :map
     field :last_refreshed_at, :utc_datetime
     field :youtube_id, :string
+
+    field :title, :string, virtual: true
+    field :description, :string, virtual: true
+
+    has_many :youtube_playlist_items, YouTubePlaylistItem, foreign_key: :youtube_channel_id
 
     timestamps()
   end
@@ -27,5 +37,41 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
       :last_refreshed_at,
       :youtube_id
     ])
+  end
+
+  def changeset_last_refreshed_at(record_or_changeset, attrs) do
+    record_or_changeset
+    |> Ecto.Changeset.cast(attrs, [
+      :last_refreshed_at
+    ])
+    |> Ecto.Changeset.validate_required([
+      :last_refreshed_at
+    ])
+  end
+
+  def where_ids_query(query \\ YouTubeChannel, ids) do
+    query
+    |> where([youtube_channel], youtube_channel.id in ^ids)
+  end
+
+  def latest_inserted_query(query \\ YouTubeChannel, ids) do
+    query
+    |> order_by([youtube_channel], desc: youtube_channel.inserted_at)
+  end
+
+  def preload_settings_query(query \\ YouTubeChannel) do
+    query
+    |> latest_inserted_query()
+    |> select([:id])
+  end
+
+  def select_generated_fields_query(query \\ YouTubeChannel) do
+    query
+    |> select([youtube_channel], %YouTubeChannel{
+      id: youtube_channel.id,
+      last_refreshed_at: youtube_channel.last_refreshed_at,
+      title: fragment("body->'snippet'->'localized'->>'title'"),
+      description: fragment("body->'snippet'->'localized'->>'description'")
+    })
   end
 end

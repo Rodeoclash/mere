@@ -19,7 +19,8 @@ config :mere, MereWeb.Endpoint,
 
 config :mere, :pow,
   user: Mere.Users.User,
-  repo: Mere.Repo
+  repo: Mere.Repo,
+  routes_backend: MereWeb.Pow.Routes
 
 # Configures the mailer
 #
@@ -49,6 +50,20 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :mere, Oban,
+  repo: Mere.Repo,
+  queues: [
+    cron: 1,
+    update_youtube_channel: 1,
+    update_youtube_playlist_item: 4
+  ],
+  plugins: [
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"* * * * *", Mere.Cron.RefreshUserIdentities}
+     ]}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

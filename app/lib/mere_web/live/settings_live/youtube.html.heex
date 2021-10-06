@@ -1,0 +1,9 @@
+<h1><%= @page_title %></h1>
+
+<ol>
+  <%= for youtube_channel <- @google_user_identity.youtube_channels do %>
+    <li>
+      <%= live_component MereWeb.Components.YouTubeChannelSettings, id: youtube_channel.id, youtube_channel_id: youtube_channel.id %>
+    </li>
+  <% end %>
+</ol>

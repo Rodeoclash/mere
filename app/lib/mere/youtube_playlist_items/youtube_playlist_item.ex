@@ -1,7 +1,11 @@
 defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
+  alias __MODULE__
+
   alias Mere.{
     YouTubeChannels.YouTubeChannel
   }
+
+  import Ecto.Query
 
   use Ecto.Schema
 
@@ -11,6 +15,9 @@ defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
     field :body, :map
     field :last_refreshed_at, :utc_datetime
     field :youtube_id, :string
+
+    field :title, :string, virtual: true
+    field :description, :string, virtual: true
 
     timestamps()
   end
@@ -27,5 +34,26 @@ defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
       :last_refreshed_at,
       :youtube_id
     ])
+  end
+
+  def public_videos_query(query \\ YouTubePlaylistItem) do
+    query
+    |> where([youtube_playlist_item], fragment("body->'status'->>'privacyStatus'") == "public")
+  end
+
+  def latest_inserted_query(query \\ YouTubePlaylistItem, ids) do
+    query
+    |> order_by([youtube_playlist_item], desc: youtube_playlist_item.inserted_at)
+  end
+
+  def preload_settings_query(query \\ YouTubePlaylistItem) do
+    query
+    |> public_videos_query()
+    |> select([youtube_playlist_item], %YouTubePlaylistItem{
+      id: youtube_playlist_item.id,
+      last_refreshed_at: youtube_playlist_item.last_refreshed_at,
+      title: fragment("body->'snippet'->>'title'"),
+      description: fragment("body->'snippet'->>'description'")
+    })
   end
 end

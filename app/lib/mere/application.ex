@@ -15,7 +15,8 @@ defmodule Mere.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Mere.PubSub},
       # Start the Endpoint (http/https)
-      MereWeb.Endpoint
+      MereWeb.Endpoint,
+      {Oban, oban_config()}
       # Start a worker by calling: Mere.Worker.start_link(arg)
       # {Mere.Worker, arg}
     ]
@@ -32,5 +33,9 @@ defmodule Mere.Application do
   def config_change(changed, _new, removed) do
     MereWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp oban_config do
+    Application.fetch_env!(:mere, Oban)
   end
 end

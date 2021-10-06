@@ -5,6 +5,8 @@ defmodule Mere.UserIdentities do
     UserIdentities.UserIdentity
   }
 
+  @topic "user_identities"
+
   def refresh_access_token(user_identity) do
     client = Oauth2.Refresh.client(user_identity)
 
@@ -27,5 +29,19 @@ defmodule Mere.UserIdentities do
   def refresh_token_expired?(%{refresh_token_expires_at: refresh_token_expires_at}) do
     compared = DateTime.compare(DateTime.utc_now(), refresh_token_expires_at)
     compared == :gt || compared == :eq
+  end
+
+  def subscribe() do
+    Phoenix.PubSub.subscribe(Mere.PubSub, @topic)
+  end
+
+  def notify_subscribers(user_identity, event) do
+    Phoenix.PubSub.broadcast(
+      Mere.PubSub,
+      @topic,
+      {__MODULE__, event, user_identity}
+    )
+
+    {:ok, user_identity}
   end
 end

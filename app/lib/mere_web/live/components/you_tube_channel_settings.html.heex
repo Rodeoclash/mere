@@ -1,0 +1,17 @@
+<div>
+  <h2><%= @youtube_channel.title %></h2>
+  <p><%= @youtube_channel.description %></p>
+  <p>
+    <strong>
+      Last refreshed at: <%= @youtube_channel.last_refreshed_at %>
+    </strong>
+  </p>
+  <h3>Playlist items</h3>
+  <ol>
+    <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
+      <li>
+        <h4><%= youtube_playlist_item.title %></h4>
+      </li>
+    <% end %>
+  </ol>
+</div>
