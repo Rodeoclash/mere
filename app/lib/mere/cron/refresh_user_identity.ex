@@ -1,7 +1,7 @@
 defmodule Mere.Cron.RefreshUserIdentities do
   alias Mere.{
-    Jobs,
     Repo,
+    UserIdentities,
     UserIdentities.UserIdentity
   }
 
@@ -20,9 +20,7 @@ defmodule Mere.Cron.RefreshUserIdentities do
       |> UserIdentity.where_provider_name_query("google")
       |> Repo.all()
       |> Enum.each(fn google_user_identity ->
-        %{id: google_user_identity.id}
-        |> Jobs.UpdateYouTubeChannels.new()
-        |> Oban.insert()
+        UserIdentities.queue_refresh(google_user_identity)
       end)
 
     Logger.info("[JOB] Completed #{@job_name}")

@@ -1,5 +1,6 @@
 defmodule Mere.UserIdentities do
   alias Mere.{
+    Jobs,
     Repo,
     UserIdentities.Oauth2,
     UserIdentities.UserIdentity
@@ -43,5 +44,11 @@ defmodule Mere.UserIdentities do
     )
 
     {:ok, user_identity}
+  end
+
+  def queue_refresh(user_identity) do
+    %{id: user_identity.id}
+    |> Jobs.UpdateYouTubeChannels.new()
+    |> Oban.insert()
   end
 end

@@ -20,6 +20,10 @@ defmodule MereWeb.SettingsLive.Youtube do
     google_user_identity =
       Repo.get_by(UserIdentity, %{user_id: session["current_user_id"], provider: @provider})
 
+    if google_user_identity.last_refreshed_at == nil do
+      UserIdentities.queue_refresh(google_user_identity)
+    end
+
     if connected?(socket) == true do
       UserIdentities.subscribe()
       YouTubeChannels.subscribe()

@@ -54,7 +54,7 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
     |> where([youtube_channel], youtube_channel.id in ^ids)
   end
 
-  def latest_inserted_query(query \\ YouTubeChannel, ids) do
+  def latest_inserted_query(query \\ YouTubeChannel) do
     query
     |> order_by([youtube_channel], desc: youtube_channel.inserted_at)
   end
@@ -62,16 +62,5 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
   def preload_settings_query(query \\ YouTubeChannel) do
     query
     |> latest_inserted_query()
-    |> select([:id])
-  end
-
-  def select_generated_fields_query(query \\ YouTubeChannel) do
-    query
-    |> select([youtube_channel], %YouTubeChannel{
-      id: youtube_channel.id,
-      last_refreshed_at: youtube_channel.last_refreshed_at,
-      title: fragment("body->'snippet'->'localized'->>'title'"),
-      description: fragment("body->'snippet'->'localized'->>'description'")
-    })
   end
 end

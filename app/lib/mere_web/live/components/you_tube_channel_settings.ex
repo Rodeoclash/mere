@@ -13,7 +13,6 @@ defmodule MereWeb.Components.YouTubeChannelSettings do
 
     youtube_channels =
       YouTubeChannel.where_ids_query(ids)
-      |> YouTubeChannel.select_generated_fields_query()
       |> Repo.all()
       |> Repo.preload(youtube_playlist_items: YouTubePlaylistItem.preload_settings_query())
       |> Map.new(fn youtube_channel ->

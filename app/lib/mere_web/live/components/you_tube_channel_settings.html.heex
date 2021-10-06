@@ -1,6 +1,6 @@
 <div>
-  <h2><%= @youtube_channel.title %></h2>
-  <p><%= @youtube_channel.description %></p>
+  <h2>Title: <%= @youtube_channel.body["snippet"]["localized"]["title"] %></h2>
+  <p><%= @youtube_channel.body["snippet"]["localized"]["description"] %></p>
   <p>
     <strong>
       Last refreshed at: <%= @youtube_channel.last_refreshed_at %>
@@ -10,7 +10,9 @@
   <ol>
     <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
       <li>
-        <h4><%= youtube_playlist_item.title %></h4>
+        <h4><%= youtube_playlist_item.body["snippet"]["title"] %></h4>
+        <img {[src: youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]]} />
+        <p><%= youtube_playlist_item.body["snippet"]["description"] %></p>
       </li>
     <% end %>
   </ol>

@@ -41,7 +41,8 @@ defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
     |> where([youtube_playlist_item], fragment("body->'status'->>'privacyStatus'") == "public")
   end
 
-  def latest_inserted_query(query \\ YouTubePlaylistItem, ids) do
+  # TODO: Should be based on position
+  def latest_inserted_query(query \\ YouTubePlaylistItem) do
     query
     |> order_by([youtube_playlist_item], desc: youtube_playlist_item.inserted_at)
   end
@@ -49,11 +50,6 @@ defmodule Mere.YouTubePlaylistItems.YouTubePlaylistItem do
   def preload_settings_query(query \\ YouTubePlaylistItem) do
     query
     |> public_videos_query()
-    |> select([youtube_playlist_item], %YouTubePlaylistItem{
-      id: youtube_playlist_item.id,
-      last_refreshed_at: youtube_playlist_item.last_refreshed_at,
-      title: fragment("body->'snippet'->>'title'"),
-      description: fragment("body->'snippet'->>'description'")
-    })
+    |> latest_inserted_query()
   end
 end
