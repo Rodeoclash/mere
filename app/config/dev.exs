@@ -28,6 +28,8 @@ config :mere, MereWeb.Endpoint,
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
+config :oauth2, debug: true
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

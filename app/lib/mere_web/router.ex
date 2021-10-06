@@ -22,6 +22,8 @@ defmodule MereWeb.Router do
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
       error_handler: Pow.Phoenix.PlugErrorHandler
+
+    plug MereWeb.Plugs.CurrentUserPlug
   end
 
   pipeline :skip_csrf_protection do
@@ -35,6 +37,11 @@ defmodule MereWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/settings", MereWeb do
+    pipe_through [:browser, :protected]
+    live "/youtube", SettingsLive.Youtube, :index
   end
 
   scope "/" do
