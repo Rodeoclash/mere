@@ -1,4 +1,5 @@
 defmodule MereWeb.Endpoint do
+  use Sentry.PlugCapture
   use Phoenix.Endpoint, otp_app: :mere
 
   # The session will be stored in the cookie and signed,
@@ -48,4 +49,5 @@ defmodule MereWeb.Endpoint do
   plug Plug.Session, @session_options
   plug Pow.Plug.Session, otp_app: :mere
   plug MereWeb.Router
+  plug Sentry.PlugContext
 end

@@ -56,7 +56,7 @@ config :mere, Oban,
   queues: [
     cron: 1,
     update_youtube_channel: 1,
-    update_youtube_playlist_item: 4
+    update_youtube_playlist_item: 1
   ],
   plugins: [
     {Oban.Plugins.Cron,
@@ -64,6 +64,11 @@ config :mere, Oban,
        {"0 * * * *", Mere.Cron.RefreshUserIdentities}
      ]}
   ]
+
+config :sentry,
+  dsn: "https://1098d697325c4b62a382f904d47374e6@o1029363.ingest.sentry.io/5996367",
+  environment_name: Mix.env(),
+  included_environments: [:prod]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

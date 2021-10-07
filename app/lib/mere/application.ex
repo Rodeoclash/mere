@@ -7,6 +7,8 @@ defmodule Mere.Application do
 
   @impl true
   def start(_type, _args) do
+    Logger.add_backend(Sentry.LoggerBackend)
+
     children = [
       # Start the Ecto repository
       Mere.Repo,

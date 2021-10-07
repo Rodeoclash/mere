@@ -39,6 +39,7 @@ defmodule Mere.MixProject do
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
       {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.18"},
+      {:hackney, "~> 1.8"},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:oauth2, "~> 2.0"},
@@ -52,6 +53,7 @@ defmodule Mere.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:pow_assent, git: "https://github.com/pow-auth/pow_assent.git", branch: :master},
+      {:sentry, "8.0.0"},
       {:ssl_verify_fun, "~> 1.1"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
@@ -67,11 +69,11 @@ defmodule Mere.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      setup: ["deps.get", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
 

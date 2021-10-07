@@ -10,13 +10,15 @@ defmodule Mere.Jobs.UpdateYouTubeChannels do
 
   require Logger
 
-  use Oban.Worker, queue: :update_youtube_channel
+  use Oban.Worker,
+    queue: :update_youtube_channel,
+    max_attempts: 1
 
   @job_name inspect(__MODULE__)
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"id" => id}}) do
-    Logger.info("[JOB] Starting #{@job_name}")
+    log_message("Starting...") |> Logger.info()
 
     google_user_identity = Repo.get(UserIdentity, id)
     now = DateTime.utc_now() |> DateTime.truncate(:second)
@@ -24,6 +26,8 @@ defmodule Mere.Jobs.UpdateYouTubeChannels do
     with {:ok, response} <- YouTube.Channel.mine(google_user_identity),
          inserted_youtube_channels <-
            Enum.map(response.body["items"], fn item ->
+             log_message("Found channel: #{item["id"]}") |> Logger.info()
+
              Repo.insert(
                %YouTubeChannel{
                  body: item,
@@ -50,11 +54,19 @@ defmodule Mere.Jobs.UpdateYouTubeChannels do
              %{id: youtube_channel.id}
              |> Jobs.UpdateYouTubePlaylistItems.new()
              |> Oban.insert()
-           end),
-         do: {:ok, google_user_identity}
-
-    Logger.info("[JOB] Completed #{@job_name}")
+           end) do
+      log_message("Completed!") |> Logger.info()
+      {:ok, google_user_identity}
+    else
+      {:error, reason} ->
+        inspect(reason) |> log_message() |> Logger.error()
+        {:error, reason}
+    end
 
     :ok
+  end
+
+  defp log_message(message) do
+    "[JOB|#{@job_name}] #{message}"
   end
 end

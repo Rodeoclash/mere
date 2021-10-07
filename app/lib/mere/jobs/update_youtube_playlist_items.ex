@@ -9,12 +9,14 @@ defmodule Mere.Jobs.UpdateYouTubePlaylistItems do
 
   require Logger
 
-  use Oban.Worker, queue: :update_youtube_playlist_item
+  use Oban.Worker,
+    queue: :update_youtube_playlist_item,
+    max_attempts: 1
 
   @job_name inspect(__MODULE__)
 
   def perform(%Oban.Job{args: %{"id" => id}}) do
-    Logger.info("[JOB] Starting #{@job_name}")
+    log_message("Starting...") |> Logger.info()
 
     youtube_channel = Repo.get(YouTubeChannel, id)
     now = DateTime.utc_now() |> DateTime.truncate(:second)
@@ -40,11 +42,19 @@ defmodule Mere.Jobs.UpdateYouTubePlaylistItems do
            }),
          {:ok, youtube_channel} <- Repo.update(changeset),
          {:ok, youtube_channel} <-
-           YouTubeChannels.notify_subscribers(youtube_channel, [:updated]),
-         do: {:ok, youtube_channel}
-
-    Logger.info("[JOB] Completed #{@job_name}")
+           YouTubeChannels.notify_subscribers(youtube_channel, [:updated]) do
+      log_message("Completed!") |> Logger.info()
+      {:ok, youtube_channel}
+    else
+      {:error, reason} ->
+        inspect(reason) |> log_message() |> Logger.error()
+        {:error, reason}
+    end
 
     :ok
+  end
+
+  defp log_message(message) do
+    "[JOB|#{@job_name}] #{message}"
   end
 end

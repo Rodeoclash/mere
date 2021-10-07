@@ -6,6 +6,8 @@ defmodule Mere.UserIdentities do
     UserIdentities.UserIdentity
   }
 
+  require Logger
+
   @topic "user_identities"
 
   def refresh_access_token(user_identity) do
@@ -18,8 +20,13 @@ defmodule Mere.UserIdentities do
              access_token: client.token.access_token,
              access_token_expires_at: access_token_expires_at
            }),
-         {:ok, user_identity} <- Repo.update(changeset),
-         do: {:ok, user_identity}
+         {:ok, user_identity} <- Repo.update(changeset) do
+      {:ok, user_identity}
+    else
+      {:error, reason} ->
+        Logger.error("Unable to refresh token: #{inspect(reason)}")
+        {:error, reason}
+    end
   end
 
   def access_token_expired?(%{access_token_expires_at: access_token_expires_at}) do

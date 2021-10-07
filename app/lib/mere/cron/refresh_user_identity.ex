@@ -7,13 +7,15 @@ defmodule Mere.Cron.RefreshUserIdentities do
 
   require Logger
 
-  use Oban.Worker, queue: :cron
+  use Oban.Worker,
+    queue: :cron,
+    max_attempts: 1
 
   @job_name inspect(__MODULE__)
 
   @impl Oban.Worker
   def perform(_args) do
-    Logger.info("[JOB] Starting #{@job_name}")
+    log_message("Starting...") |> Logger.info()
 
     _updated_google_user_identities =
       UserIdentity.due_for_refresh_query()
@@ -23,8 +25,12 @@ defmodule Mere.Cron.RefreshUserIdentities do
         UserIdentities.queue_refresh(google_user_identity)
       end)
 
-    Logger.info("[JOB] Completed #{@job_name}")
+    log_message("Completed!") |> Logger.info()
 
     :ok
+  end
+
+  defp log_message(message) do
+    "[CRON|#{@job_name}] #{message}"
   end
 end
