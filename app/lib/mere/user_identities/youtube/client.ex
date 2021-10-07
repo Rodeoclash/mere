@@ -7,8 +7,6 @@ defmodule Mere.UserIdentities.YouTube.Client do
   require Logger
 
   def new(user_identity) do
-    Logger.info("Getting YouTube client")
-
     case UserIdentities.refresh_token_expired?(user_identity) do
       true ->
         {:error, :refresh_token_expired}

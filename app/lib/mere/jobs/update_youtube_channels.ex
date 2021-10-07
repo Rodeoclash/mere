@@ -26,8 +26,6 @@ defmodule Mere.Jobs.UpdateYouTubeChannels do
     with {:ok, response} <- YouTube.Channel.mine(google_user_identity),
          inserted_youtube_channels <-
            Enum.map(response.body["items"], fn item ->
-             log_message("Found channel: #{item["id"]}") |> Logger.info()
-
              Repo.insert(
                %YouTubeChannel{
                  body: item,
