@@ -8,6 +8,7 @@
 import Config
 
 config :mere,
+  public_name: "Mere",
   ecto_repos: [Mere.Repo]
 
 # Configures the endpoint
@@ -21,6 +22,10 @@ config :mere, :pow,
   user: Mere.Users.User,
   repo: Mere.Repo,
   routes_backend: MereWeb.Pow.Routes
+
+ config :ex_cldr,
+   default_locale: "en",
+   default_backend: Mere.Cldr
 
 # Configures the mailer
 #

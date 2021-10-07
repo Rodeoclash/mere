@@ -2,8 +2,9 @@
   <h2>Title: <%= @youtube_channel.body["snippet"]["localized"]["title"] %></h2>
   <p><%= @youtube_channel.body["snippet"]["localized"]["description"] %></p>
   <p>
+    Last refreshed at:
     <strong>
-      Last refreshed at: <%= @youtube_channel.last_refreshed_at %>
+      <%= time_from_now(@youtube_channel.last_refreshed_at) %>
     </strong>
   </p>
   <h3>Playlist items</h3>

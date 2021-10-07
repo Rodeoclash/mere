@@ -37,6 +37,7 @@ defmodule Mere.MixProject do
       {:certifi, "~> 2.4"},
       {:ecto_sql, "~> 3.6"},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:ex_cldr_dates_times, "~> 2.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.18"},
       {:hackney, "~> 1.8"},

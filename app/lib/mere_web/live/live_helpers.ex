@@ -20,4 +20,8 @@ defmodule MereWeb.LiveHelpers do
     modal_opts = [id: :modal, return_to: path, component: component, opts: opts]
     live_component(MereWeb.ModalComponent, modal_opts)
   end
+
+  def time_from_now(time) do
+    Mere.Cldr.DateTime.Relative.to_string!(time, relative_to: DateTime.utc_now())
+  end
 end

@@ -4,7 +4,8 @@ defmodule Mere.YouTube.Api.Channel do
   }
 
   @default_params %{
-    part: "snippet,contentDetails,brandingSettings"
+    part: "snippet,contentDetails,brandingSettings",
+    maxResults: "50"
   }
 
   @path "channels"
