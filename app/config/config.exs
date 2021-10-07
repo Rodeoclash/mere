@@ -55,8 +55,8 @@ config :mere, Oban,
   repo: Mere.Repo,
   queues: [
     cron: 1,
-    update_youtube_channel: 1,
-    update_youtube_playlist_item: 1
+    update_youtube_channel: 2,
+    update_youtube_playlist_item: 2
   ],
   plugins: [
     {Oban.Plugins.Cron,
