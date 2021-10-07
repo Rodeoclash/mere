@@ -23,9 +23,9 @@ config :mere, :pow,
   repo: Mere.Repo,
   routes_backend: MereWeb.Pow.Routes
 
- config :ex_cldr,
-   default_locale: "en",
-   default_backend: Mere.Cldr
+config :ex_cldr,
+  default_locale: "en",
+  default_backend: Mere.Cldr
 
 # Configures the mailer
 #
