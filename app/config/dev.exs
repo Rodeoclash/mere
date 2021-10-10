@@ -18,6 +18,7 @@ config :mere, Mere.Repo,
 config :mere, MereWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+  url: [scheme: "http", host: "socialeeyes.local", port: 80],
   http: [ip: {0, 0, 0, 0}, port: 4000],
   check_origin: false,
   code_reloader: true,
