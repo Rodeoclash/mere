@@ -65,7 +65,7 @@ if config_env() == :prod do
 
   config :mere, MereWeb.Endpoint,
     server: true,
-    url: [scheme: "https", host: "#{app_name}.fly.dev", port: 443],
+    url: [scheme: "https", host: "socialeeyes.com", port: 443],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
