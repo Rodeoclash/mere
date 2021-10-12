@@ -1,6 +1,19 @@
-<p>
-  User:
-  <strong>
-    <%= @user.slug %>
-  </strong>
-</p>
+<h1>
+  <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
+</h1>
+
+<%= if @youtube_channel.body["snippet"]["description"] do %>
+  <h2>
+    <%= @youtube_channel.body["snippet"]["description"] %>
+  </h2>
+<% end %>
+
+<ol>
+  <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
+    <li>
+      <h3>
+        <%= youtube_playlist_item.body["snippet"]["title"] %>
+      </h3>
+    </li>
+  <% end %>
+</ol>

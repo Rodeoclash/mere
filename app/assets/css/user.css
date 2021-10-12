@@ -1,0 +1,24 @@
+body {
+  background: #222731;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  padding: 0;
+  padding: 2rem;
+}
+
+main {
+  background: #181920;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: normal;
+}
