@@ -12,10 +12,10 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
 
   schema "youtube_channels" do
     belongs_to :user_identity, UserIdentity
+    has_one :user, through: [:user_identity, :user]
 
     field :body, :map
     field :last_refreshed_at, :utc_datetime
-    field :slug, :string, read_after_writes: true
     field :youtube_id, :string
 
     has_many :youtube_playlist_items, YouTubePlaylistItem, foreign_key: :youtube_channel_id

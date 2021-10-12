@@ -11,7 +11,7 @@ defmodule Mere.UserIdentities.UserIdentity do
   use PowAssent.Ecto.UserIdentities.Schema, user: Mere.Users.User
 
   # how many seconds between refreshes?
-  @refresh_after 10
+  @refresh_after 3600
 
   schema "user_identities" do
     field :access_token, :string

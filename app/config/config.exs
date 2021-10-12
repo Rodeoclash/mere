@@ -66,7 +66,7 @@ config :mere, Oban,
   plugins: [
     {Oban.Plugins.Cron,
      crontab: [
-       {"0 * * * *", Mere.Cron.RefreshUserIdentities}
+       {"* * * * *", Mere.Cron.RefreshUserIdentities}
      ]}
   ]
 
