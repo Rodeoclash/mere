@@ -21,12 +21,18 @@ defmodule Mere.Users.User do
   def user_identity_changeset(user_or_changeset, user_identity, attrs, user_id_attrs) do
     user_or_changeset
     |> pow_assent_user_identity_changeset(user_identity, attrs, user_id_attrs)
-    |> set_slug
+    |> generate_slug
     |> Ecto.Changeset.cast(attrs, [:slug])
     |> Ecto.Changeset.validate_required([:slug])
   end
 
-  def set_slug(changeset) do
+  def user_update_slug_changeset(record_or_changeset, attrs) do
+    record_or_changeset
+    |> Ecto.Changeset.cast(attrs, [:slug])
+    |> Ecto.Changeset.validate_required([:slug])
+  end
+
+  defp generate_slug(changeset) do
     changeset
     |> Ecto.Changeset.put_change(:slug, Users.Name.generate())
   end
