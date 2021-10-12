@@ -8,6 +8,11 @@ defmodule MereWeb.Plugs.CurrentChannelFromSubdomain do
 
   def init(default), do: default
 
+  def call(%{assigns: %{subdomain: nil}} = conn, _) do
+    conn
+    |> assign(:youtube_channel, nil)
+  end
+
   def call(%{assigns: %{subdomain: subdomain}} = conn, _) do
     case Repo.get_by(YouTubeChannel, %{slug: subdomain}) do
       nil ->

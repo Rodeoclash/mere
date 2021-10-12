@@ -9,7 +9,8 @@ defmodule MereWeb.PageController do
 
   # Channel homepage
   def index(%{assigns: %{youtube_channel: youtube_channel}} = conn, _params) do
-    IO.inspect youtube_channel
+    IO.inspect(youtube_channel)
+
     conn
     |> render("youtube_channel.html")
   end
