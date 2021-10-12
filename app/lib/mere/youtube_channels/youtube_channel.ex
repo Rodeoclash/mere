@@ -14,10 +14,8 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
     belongs_to :user_identity, UserIdentity
 
     field :body, :map
-    field :description, :string, virtual: true
     field :last_refreshed_at, :utc_datetime
     field :slug, :string, read_after_writes: true
-    field :title, :string, virtual: true
     field :youtube_id, :string
 
     has_many :youtube_playlist_items, YouTubePlaylistItem, foreign_key: :youtube_channel_id

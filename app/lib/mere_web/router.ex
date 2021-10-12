@@ -13,6 +13,9 @@ defmodule MereWeb.Router do
 
     plug PowAssent.Plug.Reauthorization,
       handler: PowAssent.Phoenix.ReauthorizationPlugHandler
+
+    plug MereWeb.Plugs.CurrentSubdomain
+    plug MereWeb.Plugs.CurrentChannelFromSubdomain
   end
 
   pipeline :api do

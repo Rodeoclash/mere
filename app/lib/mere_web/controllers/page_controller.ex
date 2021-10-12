@@ -1,7 +1,16 @@
 defmodule MereWeb.PageController do
   use MereWeb, :controller
 
-  def index(conn, _params) do
-    render(conn, "index.html")
+  # Marketing homepage
+  def index(%{assigns: %{youtube_channel: nil}} = conn, _params) do
+    conn
+    |> render("index.html")
+  end
+
+  # Channel homepage
+  def index(%{assigns: %{youtube_channel: youtube_channel}} = conn, _params) do
+    IO.inspect youtube_channel
+    conn
+    |> render("youtube_channel.html")
   end
 end
