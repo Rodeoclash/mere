@@ -1,12 +1,18 @@
 <div>
   <h2>Title: <%= @youtube_channel.body["snippet"]["localized"]["title"] %></h2>
   <p><%= @youtube_channel.body["snippet"]["localized"]["description"] %></p>
-  <p>
-    Last refreshed at:
-    <strong>
+  <dl>
+    <dt>Last refreshed at</dt>
+    <dd>
       <%= time_from_now(@youtube_channel.last_refreshed_at) %>
-    </strong>
-  </p>
+    </dd>
+    <dt>Page link</dt>
+    <dd>
+    <a target="_blank" {[href: youtube_channel_to_url(@youtube_channel)]}>
+        Your channel
+      </a>
+    </dd>
+  </dl>
   <h3>Playlist items</h3>
   <ol>
     <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
