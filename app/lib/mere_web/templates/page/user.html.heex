@@ -21,10 +21,12 @@
   <div id="youtube_tiles">
     <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
       <div class="tile">
-        <picture>
-          <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-          <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-        </picture>
+        <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
+          <picture>
+            <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+            <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+          </picture>
+        </a>
         <div>
           <h3>
             <%= youtube_playlist_item.body["snippet"]["title"] %>
