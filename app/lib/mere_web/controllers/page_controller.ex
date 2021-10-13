@@ -13,11 +13,11 @@ defmodule MereWeb.PageController do
 
   # User homepage
   def index(%{assigns: %{user: user}} = conn, _params) do
-    user = Repo.preload(user, [youtube_channels: :youtube_playlist_items])
+    user = Repo.preload(user, youtube_channels: :youtube_playlist_items)
     user_identity = List.first(user.user_identities)
     youtube_channel = List.first(user_identity.youtube_channels)
 
-    IO.inspect youtube_channel
+    IO.inspect(youtube_channel)
 
     conn
     |> put_layout("user.html")

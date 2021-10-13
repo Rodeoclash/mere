@@ -51,15 +51,10 @@ h1 {
 }
 
 h2 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: normal;
   font-family: "Montserrat", sans-serif;
-}
-
-h3 {
-  font-size: 1rem;
-  font-weight: normal;
-  font-family: "Montserrat", sans-serif;
+  margin: 1rem 0;
 }
 
 a {
@@ -89,6 +84,10 @@ a {
   #youtube_tiles {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.tile {
+  margin-bottom: 2rem;
 }
 
 .tile img {
