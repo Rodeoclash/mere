@@ -17,8 +17,10 @@ defmodule MereWeb.PageController do
     user_identity = List.first(user.user_identities)
     youtube_channel = List.first(user_identity.youtube_channels)
 
+    IO.inspect youtube_channel
+
     conn
-    |> put_root_layout("user.html")
+    |> put_layout("user.html")
     |> assign(:youtube_channel, youtube_channel)
     |> render("user.html")
   end

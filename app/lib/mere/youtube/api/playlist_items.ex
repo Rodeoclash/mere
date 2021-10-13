@@ -4,7 +4,7 @@ defmodule Mere.YouTube.Api.PlaylistItems do
   }
 
   @default_params %{
-    part: "snippet,contentDetails,status",
+    part: "snippet,contentDetails,status,statistics",
     maxResults: "50"
   }
 

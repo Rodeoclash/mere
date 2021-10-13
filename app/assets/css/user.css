@@ -1,16 +1,44 @@
 body {
-  background: #222731;
   color: #fff;
   font-family: "Lato", sans-serif;
   margin: 0;
   padding: 0;
-  padding: 2rem;
+  background-image: url("../images/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #000;
+  line-height: 1.3;
 }
 
 main {
   background: #181920;
-  padding: 1rem;
+  padding: 2rem;
+  margin: 2rem auto;
   border-radius: 1rem;
+  max-width: 66vw;
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header p {
+  margin: 0;
+  opacity: 0.66;
+}
+
+#avatar img {
+  border-radius: 100rem;
+  width: 10rem;
+}
+
+#owner {
+  margin-left: 2rem;
 }
 
 h1 {
@@ -21,4 +49,32 @@ h1 {
 h2 {
   font-size: 1rem;
   font-weight: normal;
+  font-family: "Montserrat", sans-serif;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: normal;
+  font-family: "Montserrat", sans-serif;
+}
+
+#youtube_tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+.tile img {
+  border-radius: 2rem;
+  width: 100%;
+}
+
+.tile h3 {
+  margin-bottom: 0.5rem;
+}
+
+.tile p {
+  opacity: 0.5;
+  margin: 0;
 }

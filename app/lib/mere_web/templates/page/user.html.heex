@@ -1,19 +1,39 @@
-<h1>
-  <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
-</h1>
+<main>
+  <header>
+    <div id="avatar">
+      <picture>
+        <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+        <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+      </picture>
+    </div>
+    <div id="owner">
+      <h1>
+        <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
+      </h1>
 
-<%= if @youtube_channel.body["snippet"]["description"] do %>
-  <h2>
-    <%= @youtube_channel.body["snippet"]["description"] %>
-  </h2>
-<% end %>
-
-<ol>
-  <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
-    <li>
-      <h3>
-        <%= youtube_playlist_item.body["snippet"]["title"] %>
-      </h3>
-    </li>
-  <% end %>
-</ol>
+      <%= if @youtube_channel.body["snippet"]["description"] do %>
+        <p>
+          <%= @youtube_channel.body["snippet"]["description"] %>
+        </p>
+      <% end %>
+    </div>
+  </header>
+  <div id="youtube_tiles">
+    <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
+      <div class="tile">
+        <picture>
+          <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+          <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+        </picture>
+        <div>
+          <h3>
+            <%= youtube_playlist_item.body["snippet"]["title"] %>
+          </h3>
+          <p>
+            <%= youtube_playlist_item.body["snippet"]["description"] %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</main>
