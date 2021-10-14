@@ -11,13 +11,16 @@ body {
   background-size: cover;
 }
 
+#container {
+  max-width: 66vw;
+  min-width: 600px;
+  margin: 2rem auto;
+}
+
 main {
   background: #181920;
   padding: 2rem;
-  margin: 2rem auto;
   border-radius: 1rem;
-  max-width: 66vw;
-  min-width: 600px;
   box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -59,7 +62,6 @@ h2 {
 
 a {
   color: #fff;
-  text-decoration: none;
 }
 
 #youtube_tiles {
@@ -102,4 +104,12 @@ a {
 .tile p {
   opacity: 0.5;
   margin: 0;
+}
+
+#built-by {
+  margin-top: 1rem;
+  opacity: 0.75;
+  font-size: 0.9rem;
+  display: block;
+  text-align: right;
 }

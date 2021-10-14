@@ -1,41 +1,47 @@
-<main>
-  <header>
-    <div id="avatar">
-      <picture>
-        <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-        <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-      </picture>
-    </div>
-    <div id="owner">
-      <h1>
-        <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
-      </h1>
+<div id="container">
+  <main>
+    <header>
+      <div id="avatar">
+        <picture>
+          <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+          <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+        </picture>
+      </div>
+      <div id="owner">
+        <h1>
+          <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
+        </h1>
 
-      <%= if @youtube_channel.body["snippet"]["description"] do %>
-        <p>
-          <%= @youtube_channel.body["snippet"]["description"] %>
-        </p>
+        <%= if @youtube_channel.body["snippet"]["description"] do %>
+          <p>
+            <%= @youtube_channel.body["snippet"]["description"] %>
+          </p>
+        <% end %>
+      </div>
+    </header>
+    <div id="youtube_tiles">
+      <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
+        <div class="tile">
+          <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
+            <picture>
+              <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+              <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+            </picture>
+          </a>
+          <div>
+            <h2>
+              <%= youtube_playlist_item.body["snippet"]["title"] %>
+            </h2>
+            <p>
+              <%= youtube_playlist_item.body["snippet"]["description"] %>
+            </p>
+          </div>
+        </div>
       <% end %>
     </div>
-  </header>
-  <div id="youtube_tiles">
-    <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
-      <div class="tile">
-        <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
-          <picture>
-            <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-            <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-          </picture>
-        </a>
-        <div>
-          <h2>
-            <%= youtube_playlist_item.body["snippet"]["title"] %>
-          </h2>
-          <p>
-            <%= youtube_playlist_item.body["snippet"]["description"] %>
-          </p>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</main>
+  </main>
+
+  <span id="built-by">
+    Built using <a href="http://socialeeyes.com/">socialeeyes.com</a>
+  </span>
+</div>
