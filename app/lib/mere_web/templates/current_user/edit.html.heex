@@ -1,0 +1,17 @@
+<h2>Current User Edit</h2>
+
+<%= form_for @changeset, Routes.current_user_path(@conn, :update), fn f -> %>
+  <div>
+    <label>
+      Slug: <%= text_input f, :slug %>
+      <p>
+        Controls the subdomain that you get to your site from.
+        <a target="_blank" {[href: MereWeb.SharedView.user_url(@current_user)]}>
+          View your public profile
+        </a>
+      </p>
+    </label>
+  </div>
+
+  <%= submit "Submit" %>
+<% end %>

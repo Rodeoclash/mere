@@ -42,9 +42,15 @@ defmodule MereWeb.Router do
     get "/", PageController, :index
   end
 
-  scope "/settings", MereWeb do
+  scope "/", MereWeb do
     pipe_through [:browser, :protected]
-    live "/youtube", SettingsLive.Youtube, :index
+
+    resources "/current_user", CurrentUserController, only: [:edit, :update], singleton: true
+  end
+
+  scope "/current_user", MereWeb do
+    pipe_through [:browser, :protected]
+    live "/youtube/edit", CurrentUserLive.Youtube, :edit
   end
 
   scope "/" do

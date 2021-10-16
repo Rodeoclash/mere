@@ -26,14 +26,25 @@ defmodule Mere.Users.User do
     |> Ecto.Changeset.validate_required([:slug])
   end
 
-  def user_update_slug_changeset(record_or_changeset, attrs) do
+  def changeset(record_or_changeset, attrs \\ %{}) do
     record_or_changeset
     |> Ecto.Changeset.cast(attrs, [:slug])
+    |> format_slug
     |> Ecto.Changeset.validate_required([:slug])
   end
 
   defp generate_slug(changeset) do
     changeset
     |> Ecto.Changeset.put_change(:slug, Users.Name.generate())
+  end
+
+  defp format_slug(changeset) do
+    formatted_slug =
+      changeset
+      |> Ecto.Changeset.get_field(:slug)
+      |> Users.format_slug()
+
+    changeset
+    |> Ecto.Changeset.put_change(:slug, formatted_slug)
   end
 end

@@ -11,12 +11,6 @@ defmodule MereWeb.LiveHelpers do
 
   def youtube_channel_to_user_url(youtube_channel) do
     youtube_channel = Repo.preload(youtube_channel, :user)
-
-    url =
-      MereWeb.Endpoint.url()
-      |> URI.parse()
-
-    %{url | host: "#{youtube_channel.user.slug}.#{url.host}"}
-    |> URI.to_string()
+    MereWeb.SharedView.user_url(youtube_channel.user)
   end
 end

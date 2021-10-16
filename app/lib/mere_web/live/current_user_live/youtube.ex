@@ -1,4 +1,4 @@
-defmodule MereWeb.SettingsLive.Youtube do
+defmodule MereWeb.CurrentUserLive.Youtube do
   alias Mere.{
     Repo,
     UserIdentities,
@@ -56,7 +56,7 @@ defmodule MereWeb.SettingsLive.Youtube do
     {:noreply, socket}
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(socket, :edit, _params) do
     socket
     |> assign(:page_title, "YouTube settings")
   end
