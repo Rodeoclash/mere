@@ -1,47 +1,87 @@
-<div id="container">
-  <main>
-    <header>
-      <div id="avatar">
-        <picture>
-          <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-          <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-        </picture>
-      </div>
-      <div id="owner">
-        <h1>
-          <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
-        </h1>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <%= if @youtube_channel.body["snippet"]["description"] do %>
-          <p>
-            <%= @youtube_channel.body["snippet"]["description"] %>
-          </p>
+  <title>
+    <%= @user.slug %>
+  </title>
+
+  <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/user.css")}/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <%= if @user.theme_background != nil do %>
+    <style>
+      #background {
+        background-image: url("<%= MereWeb.ThemeBackgroundUploader.url({@user.theme_background, @user}) %>");
+      }
+    </style>
+  <% end %>
+</head>
+<body>
+  <div id="container">
+    <main>
+      <header>
+        <div id="avatar">
+          <picture>
+            <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+            <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+          </picture>
+        </div>
+        <div id="owner">
+          <h1>
+            <%= @youtube_channel.body["brandingSettings"]["channel"]["title"] %>
+          </h1>
+
+          <%= if @youtube_channel.body["snippet"]["description"] do %>
+            <p>
+              <%= @youtube_channel.body["snippet"]["description"] %>
+            </p>
+          <% end %>
+        </div>
+      </header>
+      <div id="youtube_tiles">
+        <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
+          <div class="tile">
+            <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
+              <picture>
+                <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+                <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+              </picture>
+            </a>
+            <div>
+              <h2>
+                <%= youtube_playlist_item.body["snippet"]["title"] %>
+              </h2>
+              <p>
+                <%= youtube_playlist_item.body["snippet"]["description"] %>
+              </p>
+            </div>
+          </div>
         <% end %>
       </div>
-    </header>
-    <div id="youtube_tiles">
-      <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
-        <div class="tile">
-          <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
-            <picture>
-              <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-              <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-            </picture>
-          </a>
-          <div>
-            <h2>
-              <%= youtube_playlist_item.body["snippet"]["title"] %>
-            </h2>
-            <p>
-              <%= youtube_playlist_item.body["snippet"]["description"] %>
-            </p>
-          </div>
-        </div>
+    </main>
+
+    <div id="attribution">
+      <span>
+        Built using <a target="_blank" href="http://socialeeyes.com/">socialeeyes.com</a>
+      </span>
+
+      <%= if @user.theme_background != nil && @user.theme_background_creator do %>
+        <span>
+          Image by:
+          <%= if @user.theme_background_creator_url do %>
+            <a target="_blank" href={@user.theme_background_creator_url}>
+              <%= @user.theme_background_creator %>
+            </a>
+          <% else %>
+            <%= @user.theme_background_creator %>
+          <% end %>
+        </span>
       <% end %>
     </div>
-  </main>
-
-  <span id="built-by">
-    Built using <a href="http://socialeeyes.com/">socialeeyes.com</a>
-  </span>
-</div>
+  </div>
+  <div id="background"></div>
+</body>

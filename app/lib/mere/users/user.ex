@@ -6,6 +6,7 @@ defmodule Mere.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema
   use PowAssent.Ecto.Schema
+  use Waffle.Ecto.Schema
 
   schema "users" do
     pow_user_fields()
@@ -14,6 +15,10 @@ defmodule Mere.Users.User do
     has_many :youtube_playlist_items, through: [:youtube_channels, :youtube_channels]
 
     field :slug, :string
+
+    field :theme_background, MereWeb.ThemeBackgroundUploader.Type
+    field :theme_background_creator, :string
+    field :theme_background_creator_url, :string
 
     timestamps()
   end
@@ -28,7 +33,12 @@ defmodule Mere.Users.User do
 
   def changeset(record_or_changeset, attrs \\ %{}) do
     record_or_changeset
-    |> Ecto.Changeset.cast(attrs, [:slug])
+    |> Ecto.Changeset.cast(attrs, [
+      :slug,
+      :theme_background_creator,
+      :theme_background_creator_url
+    ])
+    |> cast_attachments(attrs, [:theme_background])
     |> format_slug
     |> Ecto.Changeset.validate_required([:slug])
   end

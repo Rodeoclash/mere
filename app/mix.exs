@@ -37,10 +37,12 @@ defmodule Mere.MixProject do
       {:certifi, "~> 2.4"},
       {:ecto_sql, "~> 3.6"},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:ex_aws, "~> 2.1.2"},
+      {:ex_aws_s3, "~> 2.0"},
       {:ex_cldr_dates_times, "~> 2.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:gettext, "~> 0.18"},
-      {:hackney, "~> 1.8"},
+      {:hackney, "~> 1.9"},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:oauth2, "~> 2.0"},
@@ -56,9 +58,12 @@ defmodule Mere.MixProject do
       {:pow_assent, git: "https://github.com/pow-auth/pow_assent.git", branch: :master},
       {:sentry, "8.0.0"},
       {:ssl_verify_fun, "~> 1.1"},
+      {:sweet_xml, "~> 0.6"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 1.0"}
+      {:telemetry_poller, "~> 1.0"},
+      {:waffle, "~> 1.1"},
+      {:waffle_ecto, "~> 0.0"}
     ]
   end
 
