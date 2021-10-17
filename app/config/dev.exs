@@ -31,6 +31,11 @@ config :mere, MereWeb.Endpoint,
 
 config :oauth2, debug: true
 
+config :waffle,
+  asset_host: "https://mere-uploads-development.sgp1.cdn.digitaloceanspaces.com",
+  bucket: "mere-uploads-development",
+  storage: Waffle.Storage.S3
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

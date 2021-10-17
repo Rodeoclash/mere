@@ -16,6 +16,11 @@ config :mere, MereWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :waffle,
+  asset_host: "https://mere-uploads-production.sgp1.cdn.digitaloceanspaces.com",
+  bucket: "mere-uploads-production",
+  storage: Waffle.Storage.S3
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

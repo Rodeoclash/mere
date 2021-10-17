@@ -1,4 +1,4 @@
-defmodule Mere.Users.Name do
+defmodule Mere.Users.Slug do
   @adjectives ~w(
     autumn hidden bitter misty silent empty dry dark summer
     icy delicate quiet white cool spring winter patient
@@ -27,5 +27,11 @@ defmodule Mere.Users.Name do
     id = :rand.uniform(9999)
 
     [adjective, noun, id] |> Enum.join("-")
+  end
+
+  def format(slug) do
+    slug
+    |> String.downcase()
+    |> String.replace(~r/[\/!#$%&()*+,.:;<=>?@\^_`{|}~]/, "")
   end
 end

@@ -1,4 +1,4 @@
-defmodule Mere.UserIdentitiesTest do
+defmodule Mere.UserIdentities.UserIdentityTest do
   alias Mere.{
     UserIdentities.UserIdentity
   }

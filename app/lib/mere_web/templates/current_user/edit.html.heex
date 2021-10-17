@@ -1,16 +1,43 @@
 <h2>Current User Edit</h2>
 
-<%= form_for @changeset, Routes.current_user_path(@conn, :update), fn f -> %>
+<%= form_for @changeset, Routes.current_user_path(@conn, :update), [multipart: true], fn f -> %>
   <div>
     <label>
       Slug: <%= text_input f, :slug %>
-      <p>
-        Controls the subdomain that you get to your site from.
-        <a target="_blank" {[href: MereWeb.SharedView.user_url(@current_user)]}>
-          View your public profile
-        </a>
-      </p>
     </label>
+    <p>
+      Controls the subdomain that you get to your site from.
+      <a target="_blank" {[href: MereWeb.SharedView.user_url(@current_user)]}>
+        View your public profile
+      </a>
+    </p>
+  </div>
+
+  <div>
+    <label>
+      Theme background: <%= file_input f, :theme_background %>
+    </label>
+    <p>
+      Background image for your page theme
+    </p>
+  </div>
+
+  <div>
+    <label>
+      Theme background creator: <%= text_input f, :theme_background_creator %>
+    </label>
+    <p>
+      Name of the person who created the background image
+    </p>
+  </div>
+
+  <div>
+    <label>
+      Theme background creator url: <%= text_input f, :theme_background_creator_url %>
+    </label>
+    <p>
+      URL to the creators homepage
+    </p>
   </div>
 
   <%= submit "Submit" %>
