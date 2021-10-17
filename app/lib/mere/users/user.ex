@@ -26,7 +26,7 @@ defmodule Mere.Users.User do
   def user_identity_changeset(user_or_changeset, user_identity, attrs, user_id_attrs) do
     user_or_changeset
     |> pow_assent_user_identity_changeset(user_identity, attrs, user_id_attrs)
-    |> generate_slug
+    |> ensure_slug
     |> Ecto.Changeset.cast(attrs, [:slug])
     |> Ecto.Changeset.validate_required([:slug])
   end
@@ -34,24 +34,21 @@ defmodule Mere.Users.User do
   def changeset(record_or_changeset, attrs \\ %{}) do
     record_or_changeset
     |> Ecto.Changeset.cast(attrs, [
-      :slug,
       :theme_background_creator,
       :theme_background_creator_url
     ])
     |> cast_attachments(attrs, [:theme_background])
-    |> format_slug
+    |> ensure_slug
+    |> Ecto.Changeset.cast(attrs, [:slug])
     |> Ecto.Changeset.validate_required([:slug])
   end
 
-  defp generate_slug(changeset) do
-    changeset
-    |> Ecto.Changeset.put_change(:slug, Users.Name.generate())
-  end
-
-  defp format_slug(changeset) do
-    formatted_slug =
+  defp ensure_slug(changeset) do
+    slug =
       changeset
-      |> Ecto.Changeset.get_field(:slug)
+      |> Ecto.Changeset.get_field(:slug) || Users.Slug.generate()
+
+    formatted_slug = slug
       |> Users.format_slug()
 
     changeset

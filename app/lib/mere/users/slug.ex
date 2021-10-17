@@ -1,4 +1,4 @@
-defmodule Mere.Users.Name do
+defmodule Mere.Users.Slug do
   @adjectives ~w(
     autumn hidden bitter misty silent empty dry dark summer
     icy delicate quiet white cool spring winter patient
