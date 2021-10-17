@@ -68,7 +68,6 @@ h2 {
   font-size: 1.2rem;
   font-weight: normal;
   font-family: "Montserrat", sans-serif;
-  margin: 1rem 0 0.5rem 0;
 }
 
 a {
@@ -103,18 +102,19 @@ a {
   margin-bottom: 2rem;
 }
 
+.tile h2 {
+  margin-bottom: 0;
+}
+
 .tile img {
   border-radius: 2rem;
   width: 100%;
 }
 
-.tile h3 {
-  margin-bottom: 0.5rem;
-}
-
-.tile p {
+.tile p.description {
   opacity: 0.5;
   margin: 0;
+  white-space: pre-line;
 }
 
 #attribution {

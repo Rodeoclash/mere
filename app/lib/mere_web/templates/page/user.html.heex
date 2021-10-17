@@ -55,8 +55,8 @@
               <h2>
                 <%= youtube_playlist_item.body["snippet"]["title"] %>
               </h2>
-              <p>
-                <%= youtube_playlist_item.body["snippet"]["description"] %>
+              <p class="description">
+                <%= youtube_playlist_item.body["snippet"]["description"] |> String.trim() %>
               </p>
             </div>
           </div>
