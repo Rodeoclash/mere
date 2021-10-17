@@ -1,6 +1,7 @@
 defmodule Mere.Users.User do
   alias Mere.{
-    Users
+    Users,
+    Users.Slug
   }
 
   use Ecto.Schema
@@ -46,10 +47,11 @@ defmodule Mere.Users.User do
   defp ensure_slug(changeset) do
     slug =
       changeset
-      |> Ecto.Changeset.get_field(:slug) || Users.Slug.generate()
+      |> Ecto.Changeset.get_field(:slug) || Slug.generate()
 
-    formatted_slug = slug
-      |> Users.format_slug()
+    formatted_slug =
+      slug
+      |> Slug.format()
 
     changeset
     |> Ecto.Changeset.put_change(:slug, formatted_slug)

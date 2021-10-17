@@ -28,4 +28,10 @@ defmodule Mere.Users.Slug do
 
     [adjective, noun, id] |> Enum.join("-")
   end
+
+  def format(slug) do
+    slug
+    |> String.downcase()
+    |> String.replace(~r/[\/!#$%&()*+,.:;<=>?@\^_`{|}~]/, "")
+  end
 end
