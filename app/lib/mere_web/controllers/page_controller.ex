@@ -1,6 +1,8 @@
 defmodule MereWeb.PageController do
   alias Mere.{
-    Repo
+    Repo,
+    YouTubeChannels.YouTubeChannel,
+    YouTubePlaylistItems.YouTubePlaylistItem
   }
 
   use MereWeb, :controller
@@ -13,11 +15,10 @@ defmodule MereWeb.PageController do
 
   # User homepage
   def index(%{assigns: %{user: user}} = conn, _params) do
-    user = Repo.preload(user, youtube_channels: :youtube_playlist_items)
-    user_identity = List.first(user.user_identities)
-    youtube_channel = List.first(user_identity.youtube_channels)
-
-    IO.inspect(youtube_channel)
+    youtube_channel =
+      YouTubeChannel.where_user_id_query(user.id)
+      |> Repo.one()
+      |> Repo.preload(youtube_playlist_items: YouTubePlaylistItem.public_videos_query())
 
     conn
     |> put_layout("user.html")

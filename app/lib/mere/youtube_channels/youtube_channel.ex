@@ -3,6 +3,7 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
 
   alias Mere.{
     UserIdentities.UserIdentity,
+    Users.User,
     YouTubePlaylistItems.YouTubePlaylistItem
   }
 
@@ -45,6 +46,18 @@ defmodule Mere.YouTubeChannels.YouTubeChannel do
     |> Ecto.Changeset.validate_required([
       :last_refreshed_at
     ])
+  end
+
+  def where_user_id_query(query \\ YouTubeChannel, id) do
+    query
+    |> join(:inner, [youtube_channel], user_identity in UserIdentity,
+      on: user_identity.id == youtube_channel.user_identity_id
+    )
+    |> join(:inner, [youtube_channel, user_identity], user in User,
+      on: user.id == user_identity.user_id
+    )
+    |> where([youtube_channel, user_identity, user], user.id == ^id)
+    |> limit(1)
   end
 
   def where_ids_query(query \\ YouTubeChannel, ids) do
