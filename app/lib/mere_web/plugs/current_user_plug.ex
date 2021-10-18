@@ -1,4 +1,4 @@
-defmodule MereWeb.Plugs.CurrentUserPlug do
+defmodule MereWeb.CurrentUserPlug do
   alias Mere.{
     Repo
   }

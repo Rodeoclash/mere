@@ -1,4 +1,4 @@
-defmodule MereWeb.Plugs.CurrentSubdomain do
+defmodule MereWeb.CurrentSubdomainPlug do
   import Plug.Conn
 
   def init(default), do: default

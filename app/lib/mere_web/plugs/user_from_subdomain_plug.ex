@@ -1,4 +1,4 @@
-defmodule MereWeb.Plugs.UserFromSubdomain do
+defmodule MereWeb.UserFromSubdomainPlug do
   alias Mere.{
     Repo,
     Users.User

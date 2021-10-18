@@ -14,8 +14,8 @@ defmodule MereWeb.Router do
     plug PowAssent.Plug.Reauthorization,
       handler: PowAssent.Phoenix.ReauthorizationPlugHandler
 
-    plug MereWeb.Plugs.CurrentSubdomain
-    plug MereWeb.Plugs.UserFromSubdomain
+    plug MereWeb.CurrentSubdomainPlug
+    plug MereWeb.UserFromSubdomainPlug
   end
 
   pipeline :api do
@@ -26,7 +26,7 @@ defmodule MereWeb.Router do
     plug Pow.Plug.RequireAuthenticated,
       error_handler: Pow.Phoenix.PlugErrorHandler
 
-    plug MereWeb.Plugs.CurrentUserPlug
+    plug MereWeb.CurrentUserPlug
   end
 
   pipeline :skip_csrf_protection do
@@ -55,6 +55,8 @@ defmodule MereWeb.Router do
 
   scope "/" do
     pipe_through :browser
+
+    get "/session/new", MereWeb.RedirectNewSessionPlug, []
 
     pow_assent_routes()
     pow_session_routes()
