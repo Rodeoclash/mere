@@ -10,7 +10,7 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-    image: postgres:12
+    image: postgres:13.4
 
   app: &app
     build:
