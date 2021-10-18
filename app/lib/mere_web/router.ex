@@ -3,6 +3,9 @@ defmodule MereWeb.Router do
   use Pow.Phoenix.Router
   use PowAssent.Phoenix.Router
 
+  use Pow.Extension.Phoenix.Router,
+    extensions: [PowPersistentSession]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -60,6 +63,7 @@ defmodule MereWeb.Router do
 
     pow_assent_routes()
     pow_session_routes()
+    pow_extension_routes()
   end
 
   scope "/" do

@@ -21,7 +21,9 @@ config :mere, MereWeb.Endpoint,
 config :mere, :pow,
   user: Mere.Users.User,
   repo: Mere.Repo,
-  routes_backend: MereWeb.Pow.Routes
+  routes_backend: MereWeb.Pow.Routes,
+  extensions: [PowPersistentSession],
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
 
 config :ex_cldr,
   default_locale: "en",

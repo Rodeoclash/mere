@@ -6,6 +6,10 @@ defmodule Mere.Users.User do
 
   use Ecto.Schema
   use Pow.Ecto.Schema
+
+  use Pow.Extension.Ecto.Schema,
+    extensions: [PowPersistentSession]
+
   use PowAssent.Ecto.Schema
   use Waffle.Ecto.Schema
 
@@ -42,6 +46,7 @@ defmodule Mere.Users.User do
     |> ensure_slug
     |> Ecto.Changeset.cast(attrs, [:slug])
     |> Ecto.Changeset.validate_required([:slug])
+    |> pow_extension_changeset(attrs)
   end
 
   defp ensure_slug(changeset) do
