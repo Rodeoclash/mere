@@ -1,9 +1,13 @@
 <h2><%= @page_title %></h2>
 
-<ol>
-  <%= for youtube_channel <- @google_user_identity.youtube_channels do %>
-    <li>
-      <%= live_component MereWeb.Components.YouTubeChannelSettings, id: youtube_channel.id, youtube_channel_id: youtube_channel.id %>
-    </li>
-  <% end %>
-</ol>
+<%= if @youtube_channels do %>
+  <ol>
+    <%= for youtube_channel <- @youtube_channels do %>
+      <li>
+        <%= live_component MereWeb.Components.YouTubeChannelSettings, id: youtube_channel.id, youtube_channel_id: youtube_channel.id %>
+      </li>
+    <% end %>
+  </ol>
+<% else %>
+  <p>You have no Youtube channels</p>
+<% end %>

@@ -27,9 +27,6 @@ defmodule MereWeb.CurrentUserController do
         |> redirect(to: Routes.current_user_path(conn, :edit))
 
       {:error, failed_changeset} ->
-        IO.inspect("=== failed")
-        IO.inspect(failed_changeset)
-
         conn
         |> put_flash(:error, "Problem updating your details")
         |> render("edit.html", changeset: failed_changeset)

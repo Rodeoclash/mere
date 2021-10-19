@@ -1,0 +1,40 @@
+<h2>Custom domains</h2>
+
+<%= if @custom_domains do %>
+  <table>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th></th>
+      </tr>
+    </thead>
+    <%= for custom_domain <- @custom_domains do %>
+      <tr>
+        <td>
+          <%= custom_domain.resource %>
+        </td>
+        <td>
+          <%= link("delete", to: Routes.custom_domain_path(@conn, :delete, custom_domain), method: :delete, data: [confirm: "Confirm delete?"]) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  No custom domains yet
+<% end %>
+
+<%= form_for @changeset, Routes.custom_domain_path(@conn, :create), [method: :post], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div>
+    <%= label f, :resource, "Domain" %>
+    <%= text_input f, :resource, placeholder: "https://www.example.com" %>
+    <%= error_tag f, :resource %>
+  </div>
+
+  <%= submit "Add custom domain" %>
+<% end %>

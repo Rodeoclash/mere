@@ -1,4 +1,5 @@
 <nav>
   <%= link("Profile", to: Routes.current_user_path(MereWeb.Endpoint, :edit)) %>
+  <%= link("Domains", to: Routes.custom_domain_path(MereWeb.Endpoint, :index)) %>
   <%= link("Youtube", to: Routes.current_user_youtube_path(MereWeb.Endpoint, :edit)) %>
 </nav>

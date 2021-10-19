@@ -1,10 +1,16 @@
 <h2>Current User Edit</h2>
 
 <%= form_for @changeset, Routes.current_user_path(@conn, :update), [multipart: true], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
   <div>
-    <label>
-      Slug: <%= text_input f, :slug %>
-    </label>
+    <%= label f, :slug %>
+    <%= text_input f, :slug %>
+    <%= error_tag f, :slug %>
     <p>
       Controls the subdomain that you get to your site from.
       <a target="_blank" {[href: MereWeb.SharedView.user_url(@current_user)]}>
@@ -14,31 +20,31 @@
   </div>
 
   <div>
-    <label>
-      Theme background: <%= file_input f, :theme_background %>
-    </label>
+    <%= label f, :theme_background %>
+    <%= file_input f, :theme_background %>
+    <%= error_tag f, :theme_background %>
     <p>
       Background image for your page theme
     </p>
   </div>
 
   <div>
-    <label>
-      Theme background creator: <%= text_input f, :theme_background_creator %>
-    </label>
+    <%= label f, :theme_background_creator %>
+    <%= text_input f, :theme_background_creator %>
+    <%= error_tag f, :theme_background_creator %>
     <p>
       Name of the person who created the background image
     </p>
   </div>
 
   <div>
-    <label>
-      Theme background creator url: <%= text_input f, :theme_background_creator_url %>
-    </label>
+    <%= label f, :theme_background_creator_url %>
+    <%= text_input f, :theme_background_creator_url %>
+    <%= error_tag f, :theme_background_creator_url %>
     <p>
       URL to the creators homepage
     </p>
   </div>
 
-  <%= submit "Submit" %>
+  <%= submit "Save" %>
 <% end %>
