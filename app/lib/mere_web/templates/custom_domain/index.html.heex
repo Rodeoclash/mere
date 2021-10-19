@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>Resource</th>
+        <th>Status</th>
         <th></th>
       </tr>
     </thead>
@@ -12,6 +13,9 @@
       <tr>
         <td>
           <%= custom_domain.resource %>
+        </td>
+        <td>
+          <%= @custom_domains_status[custom_domain.resource] || "Certificate not found" %>
         </td>
         <td>
           <%= link("delete", to: Routes.custom_domain_path(@conn, :delete, custom_domain), method: :delete, data: [confirm: "Confirm delete?"]) %>
