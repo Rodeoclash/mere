@@ -76,6 +76,11 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :mere, :fly,
+    access_token:
+      System.get_env("FLY_ACCESS_TOKEN") ||
+        raise("FLY_ACCESS_TOKEN not available")
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
