@@ -49,6 +49,7 @@ defmodule MereWeb.Router do
     pipe_through [:browser, :protected]
 
     resources "/current_user", CurrentUserController, only: [:edit, :update], singleton: true
+    resources "/custom_domains", CustomDomainController, only: [:index, :create, :delete]
   end
 
   scope "/current_user", MereWeb do

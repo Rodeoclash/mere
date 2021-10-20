@@ -64,7 +64,8 @@ config :mere, Oban,
   queues: [
     cron: 1,
     update_youtube_channel: 2,
-    update_youtube_playlist_item: 2
+    update_youtube_playlist_item: 2,
+    ping_custom_domain: 1
   ],
   plugins: [
     {Oban.Plugins.Cron,

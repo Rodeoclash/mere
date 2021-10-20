@@ -63,7 +63,7 @@ defmodule MereWeb.CurrentUserLive.Youtube do
 
   defp fetch(socket, google_user_identity) do
     socket
-    |> assign(:google_user_identity, data(google_user_identity))
+    |> assign(:youtube_channels, data(google_user_identity).youtube_channels)
   end
 
   defp data(google_user_identity) do

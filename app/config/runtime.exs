@@ -59,7 +59,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  _app_name =
+  app_name =
     System.get_env("FLY_APP_NAME") ||
       raise "FLY_APP_NAME not available"
 
@@ -75,6 +75,12 @@ if config_env() == :prod do
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
     secret_key_base: secret_key_base
+
+  config :mere, :fly,
+    access_token:
+      System.get_env("FLY_ACCESS_TOKEN") ||
+        raise("FLY_ACCESS_TOKEN not available"),
+    app_name: app_name
 
   # ## Using releases
   #
