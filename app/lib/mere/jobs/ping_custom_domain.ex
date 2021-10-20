@@ -11,7 +11,7 @@ defmodule Mere.Jobs.PingCustomDomain do
 
   @job_name inspect(__MODULE__)
 
-  def perform(%Oban.Job{attempt: attempt, args: %{"hostname" => hostname}} = job) do
+  def perform(%Oban.Job{attempt: attempt, args: %{"hostname" => hostname}}) do
     log_message("Starting...") |> Logger.info()
 
     now = DateTime.utc_now() |> DateTime.truncate(:second)

@@ -33,7 +33,7 @@ defmodule MereWeb.PageController do
           "https://#{subdomain}.#{MereWeb.Endpoint.config(:url)[:host]}"
 
         custom_domain != nil ->
-          "https://#{@custom_domain.hostname}"
+          "https://#{custom_domain.hostname}"
       end
 
     conn
