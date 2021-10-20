@@ -38,7 +38,7 @@ defmodule Mere.Jobs.PingCustomDomain do
           {:error, error} ->
             CustomDomain.changeset(custom_domain, %{
               last_pinged_at: now,
-              status: error.reason
+              status: "Could not reach host #{custom_domain.hostname}"
             })
             |> Repo.update()
 
