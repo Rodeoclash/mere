@@ -12,10 +12,8 @@
   <body>
     <%= @inner_content %>
     <footer>
-      <ul>
-        <li><%= link("Privacy policy", to: Routes.page_path(MereWeb.Endpoint, :privacy)) %></li>
-        <li><%= link("Terms and Conditions", to: Routes.page_path(MereWeb.Endpoint, :terms)) %></li>
-      </ul>
+      <%= link("Privacy policy", to: Routes.page_path(MereWeb.Endpoint, :privacy)) %>
+      <%= link("Terms and Conditions", to: Routes.page_path(MereWeb.Endpoint, :terms)) %>
     </footer>
   </body>
 </html>
