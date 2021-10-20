@@ -15,15 +15,28 @@ defmodule MereWeb.PageController do
   end
 
   # User homepage
-  def index(%{assigns: %{user: user}} = conn, _params) do
+  def index(%{assigns: %{user: user, subdomain: subdomain, custom_domain: custom_domain}} = conn, _params) do
     youtube_channel =
       YouTubeChannel.where_user_id_query(user.id)
       |> Repo.one()
       |> Repo.preload(youtube_playlist_items: YouTubePlaylistItem.public_videos_query())
 
+    title = youtube_channel.body["brandingSettings"]["channel"]["title"]
+    description = youtube_channel.body["snippet"]["description"]
+
+    url = cond do
+      subdomain != nil ->
+        "https://#{subdomain}.#{MereWeb.Endpoint.config(:url)[:host]}"
+      custom_domain != nil ->
+        "https://#{@custom_domain.hostname}"
+    end
+
     conn
     |> put_layout("user.html")
     |> assign(:youtube_channel, youtube_channel)
+    |> assign(:title, title)
+    |> assign(:description, description)
+    |> assign(:url, url)
     |> render("user.html")
   end
 end
