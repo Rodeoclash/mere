@@ -1,105 +1,108 @@
-<head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>
-    <%= @title %>
-  </title>
+    <title>
+      <%= @title %>
+    </title>
 
-  <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/user.css")}/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={Routes.static_path(@conn, "/assets/user.css")}/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
-  <!-- Primary Meta Tags -->
-  <meta name="title" content={@title}>
-  <meta name="description" content={@description}>
+    <!-- Primary Meta Tags -->
+    <meta name="title" content={@title}>
+    <meta name="description" content={@description}>
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
 
-  <meta property="og:url" content={@url}>
-  <meta property="og:title" content={@title}>
-  <meta property="og:description" content={@description}>
-  <meta property="og:image" content={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]}>
+    <meta property="og:url" content={@url}>
+    <meta property="og:title" content={@title}>
+    <meta property="og:description" content={@description}>
+    <meta property="og:image" content={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]}>
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content={@url}>
-  <meta property="twitter:title" content={@title}>
-  <meta property="twitter:description" content={@description}>
-  <meta property="twitter:image" content={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]}>
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content={@url}>
+    <meta property="twitter:title" content={@title}>
+    <meta property="twitter:description" content={@description}>
+    <meta property="twitter:image" content={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]}>
 
-  <%= if @user.theme_background != nil do %>
-    <style>
-      #background {
-        background-image: url("<%= MereWeb.ThemeBackgroundUploader.url({@user.theme_background, @user}) %>");
-      }
-    </style>
-  <% end %>
-</head>
-<body>
-  <div id="container">
-    <main>
-      <header>
-        <div id="avatar">
-          <picture>
-            <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-            <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-          </picture>
-        </div>
-        <div id="owner">
-          <h1>
-            <%= @title %>
-          </h1>
+    <%= if @user.theme_background != nil do %>
+      <style>
+        #background {
+          background-image: url("<%= MereWeb.ThemeBackgroundUploader.url({@user.theme_background, @user}) %>");
+        }
+      </style>
+    <% end %>
+  </head>
+  <body>
+    <div id="container">
+      <main>
+        <header>
+          <div id="avatar">
+            <picture>
+              <source srcset={@youtube_channel.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+              <img src={@youtube_channel.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+            </picture>
+          </div>
+          <div id="owner">
+            <h1>
+              <%= @title %>
+            </h1>
 
-          <%= if @description do %>
-            <p>
-              <%= @description %>
-            </p>
+            <%= if @description do %>
+              <p>
+                <%= @description %>
+              </p>
+            <% end %>
+          </div>
+        </header>
+
+        <div id="youtube_tiles">
+          <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
+            <div class="tile">
+              <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
+                <picture>
+                  <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
+                  <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
+                </picture>
+              </a>
+              <div>
+                <h2>
+                  <%= youtube_playlist_item.body["snippet"]["title"] %>
+                </h2>
+                <p class="description"><%= youtube_playlist_item.body["snippet"]["description"] %></p>
+              </div>
+            </div>
           <% end %>
         </div>
-      </header>
+      </main>
 
-      <div id="youtube_tiles">
-        <%= for youtube_playlist_item <- @youtube_channel.youtube_playlist_items do %>
-          <div class="tile">
-            <a target="_blank" href={"https://www.youtube.com/watch?v=#{youtube_playlist_item.body["snippet"]["resourceId"]["videoId"]}"}>
-              <picture>
-                <source srcset={youtube_playlist_item.body["snippet"]["thumbnails"]["high"]["url"]} media="(min-width: 800px)" />
-                <img src={youtube_playlist_item.body["snippet"]["thumbnails"]["default"]["url"]} alt="" />
-              </picture>
-            </a>
-            <div>
-              <h2>
-                <%= youtube_playlist_item.body["snippet"]["title"] %>
-              </h2>
-              <p class="description"><%= youtube_playlist_item.body["snippet"]["description"] %></p>
-            </div>
-          </div>
+      <div id="attribution">
+        <span>
+          Built using <a target="_blank" href="http://socialeeyes.com/">socialeeyes.com</a>
+        </span>
+
+        <%= if @user.theme_background != nil && @user.theme_background_creator do %>
+          <span>
+            Image by:
+            <%= if @user.theme_background_creator_url do %>
+              <a target="_blank" href={@user.theme_background_creator_url}>
+                <%= @user.theme_background_creator %>
+              </a>
+            <% else %>
+              <%= @user.theme_background_creator %>
+            <% end %>
+          </span>
         <% end %>
       </div>
-    </main>
-
-    <div id="attribution">
-      <span>
-        Built using <a target="_blank" href="http://socialeeyes.com/">socialeeyes.com</a>
-      </span>
-
-      <%= if @user.theme_background != nil && @user.theme_background_creator do %>
-        <span>
-          Image by:
-          <%= if @user.theme_background_creator_url do %>
-            <a target="_blank" href={@user.theme_background_creator_url}>
-              <%= @user.theme_background_creator %>
-            </a>
-          <% else %>
-            <%= @user.theme_background_creator %>
-          <% end %>
-        </span>
-      <% end %>
     </div>
-  </div>
-  <div id="background"></div>
-</body>
+    <div id="background"></div>
+  </body>
+</html>

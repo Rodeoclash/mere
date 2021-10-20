@@ -37,7 +37,8 @@ defmodule MereWeb.PageController do
       end
 
     conn
-    |> put_root_layout("root_user.html")
+    |> put_root_layout(false)
+    |> put_layout(false)
     |> assign(:youtube_channel, youtube_channel)
     |> assign(:title, title)
     |> assign(:description, description)
