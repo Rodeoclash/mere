@@ -31,7 +31,7 @@ defmodule MereWeb.UserFromDomainsPlug do
   end
 
   def call(%{assigns: %{subdomain: _subdomain, custom_domain: custom_domain}} = conn, _) do
-    Repo.preload(custom_domain, :user)
+    custom_domain = Repo.preload(custom_domain, :user)
 
     conn
     |> assign(:user, custom_domain.user)
