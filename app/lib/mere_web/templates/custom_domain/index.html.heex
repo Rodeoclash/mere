@@ -15,7 +15,9 @@
     <%= for custom_domain <- @custom_domains do %>
       <tr>
         <td>
-          <%= custom_domain.hostname %>
+          <a target="_blank" href={"https://#{custom_domain.hostname}"}>
+            <%= custom_domain.hostname %>
+          </a>
         </td>
         <td>
           <%= @custom_domains_status[custom_domain.hostname] || "Creating..." %>
