@@ -10,6 +10,7 @@ defmodule Mere.Fly.Api do
 
   def default_variables() do
     %{
+      "appId" => app_name(),
       "appName" => app_name()
     }
   end

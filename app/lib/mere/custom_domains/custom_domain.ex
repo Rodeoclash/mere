@@ -12,7 +12,10 @@ defmodule Mere.CustomDomains.CustomDomain do
   schema "custom_domains" do
     belongs_to :user, User
 
-    field :resource, :string
+    field :hostname, :string
+    field :status, :string
+    field :successfully_pinged_at, :utc_datetime
+    field :last_pinged_at, :utc_datetime
 
     timestamps()
   end
@@ -20,12 +23,15 @@ defmodule Mere.CustomDomains.CustomDomain do
   def changeset(record_or_changeset, attrs \\ %{}) do
     record_or_changeset
     |> Ecto.Changeset.cast(attrs, [
-      :resource,
-      :user_id
+      :hostname,
+      :user_id,
+      :status,
+      :successfully_pinged_at,
+      :last_pinged_at
     ])
-    |> Ecto.Changeset.unique_constraint(:resource)
+    |> Ecto.Changeset.unique_constraint(:hostname)
     |> Ecto.Changeset.validate_required([
-      :resource,
+      :hostname,
       :user_id
     ])
   end

@@ -5,17 +5,37 @@
     <thead>
       <tr>
         <th>Resource</th>
-        <th>Status</th>
+        <th>Creation status</th>
+        <th>Check status</th>
+        <th>Last checked</th>
+        <th>Found working</th>
         <th></th>
       </tr>
     </thead>
     <%= for custom_domain <- @custom_domains do %>
       <tr>
         <td>
-          <%= custom_domain.resource %>
+          <%= custom_domain.hostname %>
         </td>
         <td>
-          <%= @custom_domains_status[custom_domain.resource] || "Certificate not found" %>
+          <%= @custom_domains_status[custom_domain.hostname] || "Creating..." %>
+        </td>
+        <td>
+          <%= custom_domain.status %>
+        </td>
+        <td>
+          <%= if custom_domain.last_pinged_at do %>
+            <%= time_from_now(custom_domain.last_pinged_at) %>
+          <% else %>
+            Unchecked
+          <% end %>
+        </td>
+        <td>
+          <%= if custom_domain.last_pinged_at do %>
+            <%= time_from_now(custom_domain.successfully_pinged_at) %>
+          <% else %>
+            Unchecked
+          <% end %>
         </td>
         <td>
           <%= link("delete", to: Routes.custom_domain_path(@conn, :delete, custom_domain), method: :delete, data: [confirm: "Confirm delete?"]) %>
@@ -35,9 +55,9 @@
   <% end %>
 
   <div>
-    <%= label f, :resource, "Domain" %>
-    <%= text_input f, :resource, placeholder: "https://www.example.com" %>
-    <%= error_tag f, :resource %>
+    <%= label f, :hostname %>
+    https://<%= text_input f, :hostname, placeholder: "example.com" %>
+    <%= error_tag f, :hostname %>
   </div>
 
   <%= submit "Add custom domain" %>

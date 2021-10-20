@@ -2,6 +2,7 @@ defmodule MereWeb.CustomDomainController do
   alias Mere.{
     CustomDomains.CustomDomain,
     Fly.Queries,
+    Jobs,
     Repo
   }
 
@@ -9,8 +10,7 @@ defmodule MereWeb.CustomDomainController do
 
   def index(%{assigns: %{current_user: current_user}} = conn, _params) do
     conn
-    |> assign(:custom_domains, get_custom_domains(current_user))
-    |> assign(:custom_domains_status, get_custom_domains_status())
+    |> populate_conn(current_user)
     |> assign(:changeset, get_empty_changeset(current_user))
     |> render("index.html")
   end
@@ -28,17 +28,21 @@ defmodule MereWeb.CustomDomainController do
 
     case Repo.insert(changeset) do
       {:ok, custom_domain} ->
+        hostname = new_custom_domain["hostname"]
+
+        Queries.Certificates.create(hostname)
+
+        %{"hostname" => hostname}
+        |> Jobs.PingCustomDomain.new()
+        |> Oban.insert()
+
         conn
-        |> assign(:custom_domains, get_custom_domains(current_user))
-        |> assign(:custom_domains_status, get_custom_domains_status())
-        |> assign(:changeset, get_empty_changeset(current_user))
-        |> put_flash(:info, "Custom domain #{custom_domain.resource} created")
-        |> render("index.html")
+        |> put_flash(:info, "Custom domain #{custom_domain.hostname} creating")
+        |> redirect(to: Routes.custom_domain_path(MereWeb.Endpoint, :index))
 
       {:error, changeset} ->
         conn
-        |> assign(:custom_domains, get_custom_domains(current_user))
-        |> assign(:custom_domains_status, get_custom_domains_status())
+        |> populate_conn(current_user)
         |> assign(:changeset, changeset)
         |> put_flash(:error, "Error adding custom domain")
         |> render("index.html")
@@ -54,21 +58,25 @@ defmodule MereWeb.CustomDomainController do
 
     case Repo.delete(custom_domain) do
       {:ok, custom_domain} ->
+        IO.inspect(Queries.Certificates.delete(custom_domain.hostname))
+
         conn
-        |> assign(:custom_domains, get_custom_domains(current_user))
-        |> assign(:custom_domains_status, get_custom_domains_status())
-        |> assign(:changeset, get_empty_changeset(current_user))
-        |> put_flash(:info, "Custom domain #{custom_domain.resource} deleted")
-        |> render("index.html")
+        |> put_flash(:info, "Custom domain #{custom_domain.hostname} deleted")
+        |> redirect(to: Routes.custom_domain_path(MereWeb.Endpoint, :index))
 
       {:error, changeset} ->
         conn
-        |> assign(:custom_domains, get_custom_domains(current_user))
-        |> assign(:custom_domains_status, get_custom_domains_status())
+        |> populate_conn(current_user)
         |> assign(:changeset, changeset)
         |> put_flash(:error, "Error deleting custom domain")
         |> render("index.html")
     end
+  end
+
+  defp populate_conn(conn, current_user) do
+    conn
+    |> assign(:custom_domains, get_custom_domains(current_user))
+    |> assign(:custom_domains_status, get_custom_domains_status())
   end
 
   defp get_custom_domains(current_user) do
