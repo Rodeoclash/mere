@@ -29,15 +29,15 @@ defmodule MereWeb.PageController do
 
     url =
       cond do
-        subdomain != nil ->
-          "https://#{subdomain}.#{MereWeb.Endpoint.config(:url)[:host]}"
-
         custom_domain != nil ->
           "https://#{custom_domain.hostname}"
+
+        subdomain != nil ->
+          "https://#{subdomain}.#{MereWeb.Endpoint.config(:url)[:host]}"
       end
 
     conn
-    |> put_layout("user.html")
+    |> put_root_layout("root_user.html")
     |> assign(:youtube_channel, youtube_channel)
     |> assign(:title, title)
     |> assign(:description, description)
