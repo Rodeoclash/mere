@@ -17,6 +17,8 @@ defmodule MereWeb.Router do
     plug PowAssent.Plug.Reauthorization,
       handler: PowAssent.Phoenix.ReauthorizationPlugHandler
 
+    plug MereWeb.CurrentCustomDomainPlug
+
     plug MereWeb.CurrentSubdomainPlug
     plug MereWeb.UserFromSubdomainPlug
   end
