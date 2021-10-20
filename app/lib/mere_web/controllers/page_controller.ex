@@ -10,7 +10,6 @@ defmodule MereWeb.PageController do
   # Marketing homepage
   def index(%{assigns: %{user: nil}} = conn, _params) do
     conn
-    |> put_layout("home.html")
     |> render("index.html")
   end
 
@@ -44,5 +43,15 @@ defmodule MereWeb.PageController do
     |> assign(:description, description)
     |> assign(:url, url)
     |> render("user.html")
+  end
+
+  def privacy(conn, _params) do
+    conn
+    |> render("privacy.html")
+  end
+
+  def terms(conn, _params) do
+    conn
+    |> render("terms.html")
   end
 end
