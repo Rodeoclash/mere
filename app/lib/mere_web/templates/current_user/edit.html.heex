@@ -1,4 +1,6 @@
-<h2>Current User Edit</h2>
+<h2 id="pageTitle">
+  <%= @page_title %>
+</h2>
 
 <%= form_for @changeset, Routes.current_user_path(@conn, :update), [multipart: true], fn f -> %>
   <%= if @changeset.action do %>

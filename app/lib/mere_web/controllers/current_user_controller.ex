@@ -6,10 +6,13 @@ defmodule MereWeb.CurrentUserController do
 
   use MereWeb, :controller
 
+  @page_title "Profile / Theme"
+
   def edit(%{assigns: %{current_user: current_user}} = conn, _params) do
     changeset = User.changeset(current_user)
 
     conn
+    |> assign(:page_title, @page_title)
     |> assign(:changeset, changeset)
     |> render("edit.html")
   end
@@ -29,6 +32,8 @@ defmodule MereWeb.CurrentUserController do
       {:error, failed_changeset} ->
         conn
         |> put_flash(:error, "Problem updating your details")
+        |> assign(:page_title, @page_title)
+        |> assign(:changeset, changeset)
         |> render("edit.html", changeset: failed_changeset)
     end
   end

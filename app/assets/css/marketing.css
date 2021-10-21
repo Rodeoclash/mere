@@ -1,0 +1,37 @@
+#hero h1 {
+  font-size: 5rem;
+  margin: 1rem 0;
+}
+
+#hero p {
+  margin: 2rem 0;
+}
+
+#hero {
+  height: calc(100vh - 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#getStarted {
+  background-color: #222;
+  border-radius: 0.25rem;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0.5rem 0;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+#getStarted:hover,
+#getStarted:focus {
+  opacity: 0.75;
+}

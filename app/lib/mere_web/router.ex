@@ -33,10 +33,6 @@ defmodule MereWeb.Router do
     plug MereWeb.CurrentUserPlug
   end
 
-  pipeline :admin do
-    plug :put_layout, {MereWeb.LayoutView, :admin}
-  end
-
   pipeline :skip_csrf_protection do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -53,7 +49,7 @@ defmodule MereWeb.Router do
   end
 
   scope "/admin", MereWeb do
-    pipe_through [:browser, :protected, :admin]
+    pipe_through [:browser, :protected]
 
     resources "/current_user", CurrentUserController, only: [:edit, :update], singleton: true
     resources "/custom_domains", CustomDomainController, only: [:index, :create, :delete]
