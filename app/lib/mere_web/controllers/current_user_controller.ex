@@ -14,7 +14,7 @@ defmodule MereWeb.CurrentUserController do
     conn
     |> assign(:page_title, @page_title)
     |> assign(:changeset, changeset)
-    |> render("edit.html")
+    |> populate_conn()
   end
 
   def update(
@@ -33,8 +33,14 @@ defmodule MereWeb.CurrentUserController do
         conn
         |> put_flash(:error, "Problem updating your details")
         |> assign(:page_title, @page_title)
-        |> assign(:changeset, changeset)
-        |> render("edit.html", changeset: failed_changeset)
+        |> assign(:changeset, failed_changeset)
+        |> populate_conn()
     end
+  end
+
+  defp populate_conn(conn) do
+    conn
+    |> assign(:page_title, @page_title)
+    |> render("edit.html")
   end
 end

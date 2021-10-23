@@ -1,52 +1,64 @@
-<h2 id="pageTitle">
-  <%= @page_title %>
-</h2>
+<p>Use this page to customise how your YouTube channel looks with a background. You can also modify the subdomain that loads your customised site.</p>
+<div class="content">
+  <%= form_for @changeset, Routes.current_user_path(@conn, :update), [multipart: true], fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
 
-<%= form_for @changeset, Routes.current_user_path(@conn, :update), [multipart: true], fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+    <div class="field">
+      <%= label f, :slug %>
+      <div class="input">
+        <%= text_input f, :slug %>
+        <%= error_tag f, :slug %>
+        <p>
+          Controls the subdomain that you get to your site from.
+          <a target="_blank" {[href: MereWeb.SharedView.user_url(@current_user)]}>
+            View your site
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label f, :theme_background %>
+      <div class="input">
+        <%= file_input f, :theme_background %>
+        <%= error_tag f, :theme_background %>
+        <p>
+          Background image for your page theme
+        </p>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label f, :theme_background_creator %>
+      <div class="input">
+        <%= text_input f, :theme_background_creator %>
+        <%= error_tag f, :theme_background_creator %>
+        <p>
+          Name of the person who created the background image
+        </p>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= label f, :theme_background_creator_url %>
+      <div class="input">
+        <%= text_input f, :theme_background_creator_url %>
+        <%= error_tag f, :theme_background_creator_url %>
+        <p>
+          URL to the creators homepage
+        </p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label />
+      <div class="input">
+        <%= submit "Save" %>
+      </div>
     </div>
   <% end %>
-
-  <div>
-    <%= label f, :slug %>
-    <%= text_input f, :slug %>
-    <%= error_tag f, :slug %>
-    <p>
-      Controls the subdomain that you get to your site from.
-      <a target="_blank" {[href: MereWeb.SharedView.user_url(@current_user)]}>
-        View your public profile
-      </a>
-    </p>
-  </div>
-
-  <div>
-    <%= label f, :theme_background %>
-    <%= file_input f, :theme_background %>
-    <%= error_tag f, :theme_background %>
-    <p>
-      Background image for your page theme
-    </p>
-  </div>
-
-  <div>
-    <%= label f, :theme_background_creator %>
-    <%= text_input f, :theme_background_creator %>
-    <%= error_tag f, :theme_background_creator %>
-    <p>
-      Name of the person who created the background image
-    </p>
-  </div>
-
-  <div>
-    <%= label f, :theme_background_creator_url %>
-    <%= text_input f, :theme_background_creator_url %>
-    <%= error_tag f, :theme_background_creator_url %>
-    <p>
-      URL to the creators homepage
-    </p>
-  </div>
-
-  <%= submit "Save" %>
-<% end %>
+</div>

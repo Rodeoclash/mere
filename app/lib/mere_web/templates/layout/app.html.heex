@@ -1,11 +1,12 @@
-<div id="app">
+<%= render MereWeb.SharedView, "header.html", assigns %>
+
+<main>
   <aside>
-    <h1>Social Eyes</h1>
     <%= render MereWeb.SharedView, "admin_navigation.html", assigns %>
   </aside>
-  <main>
+  <article>
     <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
     <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
     <%= @inner_content %>
-  </main>
-</div>
+  </article>
+</main>

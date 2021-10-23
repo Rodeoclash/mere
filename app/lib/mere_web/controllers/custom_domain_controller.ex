@@ -8,11 +8,12 @@ defmodule MereWeb.CustomDomainController do
 
   use MereWeb, :controller
 
+  @page_title "Custom Domains"
+
   def index(%{assigns: %{current_user: current_user}} = conn, _params) do
     conn
-    |> populate_conn(current_user)
     |> assign(:changeset, get_empty_changeset(current_user))
-    |> render("index.html")
+    |> populate_conn(current_user)
   end
 
   def create(%{assigns: %{current_user: current_user}} = conn, %{
@@ -42,10 +43,9 @@ defmodule MereWeb.CustomDomainController do
 
       {:error, changeset} ->
         conn
-        |> populate_conn(current_user)
         |> assign(:changeset, changeset)
         |> put_flash(:error, "Error adding custom domain")
-        |> render("index.html")
+        |> populate_conn(current_user)
     end
   end
 
@@ -66,10 +66,9 @@ defmodule MereWeb.CustomDomainController do
 
       {:error, changeset} ->
         conn
-        |> populate_conn(current_user)
         |> assign(:changeset, changeset)
         |> put_flash(:error, "Error deleting custom domain")
-        |> render("index.html")
+        |> populate_conn(current_user)
     end
   end
 
@@ -77,6 +76,8 @@ defmodule MereWeb.CustomDomainController do
     conn
     |> assign(:custom_domains, get_custom_domains(current_user))
     |> assign(:custom_domains_status, get_custom_domains_status())
+    |> assign(:page_title, @page_title)
+    |> render("index.html")
   end
 
   defp get_custom_domains(current_user) do
