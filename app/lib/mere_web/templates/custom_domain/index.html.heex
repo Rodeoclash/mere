@@ -55,7 +55,7 @@
 
   <h2>Add new custom domain</h2>
   <p>
-    Use this form to add a new custom domain. Ensure you enter just the hostname ("example.com") no the schema and hostname ("https://example.com").
+    Use this form to add a new custom domain. Ensure you enter just the hostname ("example.com") and don't include a schema (https://)
   </p>
   <%= form_for @changeset, Routes.custom_domain_path(@conn, :create), [method: :post], fn f -> %>
     <%= if @changeset.action do %>
