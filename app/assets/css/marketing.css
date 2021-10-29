@@ -10,6 +10,12 @@
   margin: 1rem 0;
 }
 
+#hero h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 -1rem 0;
+}
+
 #hero p {
   margin: 2rem 0;
 }
@@ -31,14 +37,29 @@
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.7;
-  margin: 0;
+  margin: 0 auto;
   padding: 0.5rem 0;
   text-align: center;
   text-decoration: none;
   width: 100%;
+  max-width: 20rem;
 }
 
 #getStarted:hover,
 #getStarted:focus {
   opacity: 0.75;
+}
+
+#hero #about {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0 -2rem;
+  margin-top: 5rem;
+}
+
+#hero #about > * {
+  margin: 0 2rem;
+  max-width: 20rem;
+  text-align: left;
 }

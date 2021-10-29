@@ -2,13 +2,34 @@
   <div>
     <h1>Social Eyes</h1>
     <p>
-      Generate an instant homepage based on your YouTube channel.
-    </p>
-    <p>
-      <%= link("Get started / Login", to: Routes.pow_assent_authorization_path(MereWeb.Endpoint, :new, "google"), id: "getStarted") %>
+      <%= if @current_user do %>
+        <%= link("Go to my dashboard", to: Routes.current_user_path(MereWeb.Endpoint, :edit), id: "getStarted") %>
+      <% else %>
+        <%= link("Get started / Sign up", to: Routes.pow_assent_authorization_path(MereWeb.Endpoint, :new, "google"), id: "getStarted") %>
+      <% end %>
     </p>
     <p>
       <a target="_blank" href="https://www.rodeoclash.com">See an example</a>
     </p>
+    <div id="about">
+      <div>
+        <h2>What is Social Eyes?</h2>
+        <p>
+          Social Eyes is a simple and easy way to generate a great looking, themeable, instant homepage based on your YouTube channel. This homepage can be hosted on your own website and will be updated automatically as you add videos to your channel.
+        </p>
+      </div>
+      <div>
+        <h2>How we use your data</h2>
+        <p>
+          When you sign up to Social Eyes, we will ask you to authorize your YouTube account. This will allow us to access your YouTube data to generate the homepage for you. Social Eyes <strong>will never</strong> post anything on your behalf to your YouTube channel.
+        </p>
+      </div>
+      <div>
+        <h2>Why?</h2>
+        <p>
+          If you've been working on your YouTube channel for a while and you're looking at setting a website to promote your content, Social Eyes is the fastest and easiest way of getting your content up on your own website with minimal effort.
+        </p>
+      </div>
+    </div>
   </div>
 </div>

@@ -13,6 +13,7 @@ defmodule MereWeb.Router do
     plug :put_root_layout, {MereWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :pow_assent_persistent_session
 
     plug PowAssent.Plug.Reauthorization,
       handler: PowAssent.Phoenix.ReauthorizationPlugHandler
@@ -105,4 +106,11 @@ defmodule MereWeb.Router do
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
+
+  defp pow_assent_persistent_session(conn, _opts) do
+    PowAssent.Plug.put_create_session_callback(conn, fn conn, _provider, _config ->
+      PowPersistentSession.Plug.create(conn, Pow.Plug.current_user(conn))
+    end)
+  end
+
 end
