@@ -112,5 +112,4 @@ defmodule MereWeb.Router do
       PowPersistentSession.Plug.create(conn, Pow.Plug.current_user(conn))
     end)
   end
-
 end
