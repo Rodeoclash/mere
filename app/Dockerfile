@@ -23,7 +23,7 @@ RUN mix do deps.get deps.compile
 
 # copy in the applications
 COPY ./assets ./assets
-COPY ./assets/images/* ./priv/static/images
+COPY ./assets/images/* ./priv/static/images/
 COPY ./lib ./lib
 COPY ./priv ./priv
 
