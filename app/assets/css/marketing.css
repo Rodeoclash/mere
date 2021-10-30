@@ -28,7 +28,7 @@
   text-align: center;
 }
 
-#getStarted {
+#gotoDashboard {
   background-color: #222;
   border-radius: 0.25rem;
   color: #fff;
@@ -45,9 +45,15 @@
   max-width: 20rem;
 }
 
-#getStarted:hover,
-#getStarted:focus {
+#gotoDashboard:hover,
+#gotoDashboard:focus {
   opacity: 0.75;
+}
+
+#getStartedGoogle img {
+  width: 16rem;
+  display: block;
+  margin: 0 auto;
 }
 
 #hero #about {
