@@ -46,7 +46,7 @@ config :esbuild,
   version: "0.12.18",
   default: [
     args:
-      ~w(js/app.js js/user.js --loader:.jpg=file --loader:.png=file --loader:.svg=file --bundle --target=es2016 --outdir=../priv/static/assets),
+      ~w(js/app.js js/user.js --loader:.jpg=file --loader:.svg=file --bundle --target=es2016 --outdir=../priv/static/assets),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
