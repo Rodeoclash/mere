@@ -2,6 +2,7 @@
 // Remove this line if you add a your own CSS build pipeline (e.g postcss).
 import "../css/app.css";
 import "../css/marketing.css";
+import "../images/sign_in_with_google.png";
 
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
