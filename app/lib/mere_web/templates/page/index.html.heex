@@ -3,7 +3,7 @@
     <h1>Social Eyes</h1>
     <p>
       <%= if @current_user do %>
-        <%= link("Go to my dashboard", to: Routes.current_user_path(MereWeb.Endpoint, :edit), id: "getStarted") %>
+        <%= link("Go to my dashboard", to: Routes.current_user_path(MereWeb.Endpoint, :edit), id: "gotoDashboard") %>
       <% else %>
         <%= link(to: Routes.pow_assent_authorization_path(MereWeb.Endpoint, :new, "google"), id: "getStartedGoogle") do %>
           <%= img_tag(Routes.static_path(@conn, "/images/sign_in_with_google.png")) %>
