@@ -1,18 +1,9 @@
-# Development
+# About
 
-Commands are available in `Makefile`.
+Generate an instant homepage from your YouTube channel.
 
-## Initial setup
+## See it in action
 
-Grab the `.envrc` file from Sam, make sure you have direnv installed
+To generate a homepage from your channel, use https://socialeeyes.com/
 
-Once that is in place:
-
-- `make setup`
-- `make start`
-
-# Todo
-
-- Clicking timestamp should play through the video without pausing?
-- Remove AlpineJS, fix flash messages
-- Comment upvotes
+To see an example of a generated homepage, https://www.rodeoclash.com
